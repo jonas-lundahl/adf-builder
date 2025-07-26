@@ -1,18 +1,18 @@
 import { z } from "zod";
 
 const alignment_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("alignment")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       align: z.union([z.literal("center"), z.literal("end")]),
     }),
   }),
 );
 
 const annotation_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("annotation")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       id: z.string(),
       annotationType: z.union([z.literal("inlineComment")]),
     }),
@@ -20,9 +20,9 @@ const annotation_mark = z.lazy(() =>
 );
 
 const backgroundColor_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("backgroundColor")]),
-    attrs: z.object({ color: z.string().regex(/^#[0-9a-fA-F]{6}$/) }),
+    attrs: z.strictObject({ color: z.string().regex(/^#[0-9a-fA-F]{6}$/) }),
   }),
 );
 
@@ -55,18 +55,18 @@ const block_content = z.lazy(() =>
 );
 
 const blockCard_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("blockCard")]),
     attrs: z.union([
-      z.object({
+      z.strictObject({
         localId: z.string().optional(),
         url: z.string().optional(),
-        datasource: z.object({
+        datasource: z.strictObject({
           id: z.string(),
           parameters: z.unknown(),
           views: z
             .array(
-              z.object({
+              z.strictObject({
                 properties: z.unknown().optional(),
                 type: z.string(),
               }),
@@ -86,16 +86,16 @@ const blockCard_node = z.lazy(() =>
           ])
           .optional(),
       }),
-      z.object({ url: z.string(), localId: z.string().optional() }),
-      z.object({ data: z.unknown(), localId: z.string().optional() }),
+      z.strictObject({ url: z.string(), localId: z.string().optional() }),
+      z.strictObject({ data: z.unknown(), localId: z.string().optional() }),
     ]),
   }),
 );
 
 const blockquote_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("blockquote")]),
-    attrs: z.object({ localId: z.string().optional() }).optional(),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
     content: z
       .array(
         z.union([
@@ -114,10 +114,10 @@ const blockquote_node = z.lazy(() =>
 );
 
 const bodiedExtension_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("bodiedExtension")]),
     marks: z.array(z.unknown()).optional(),
-    attrs: z.object({
+    attrs: z.strictObject({
       extensionKey: z.string().min(1),
       extensionType: z.string().min(1),
       parameters: z.unknown().optional(),
@@ -145,9 +145,9 @@ const bodiedExtension_with_marks_node = z.lazy(() =>
 );
 
 const border_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("border")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       size: z.number().min(1).max(3),
       color: z.string().regex(/^#[0-9a-fA-F]{8}$|^#[0-9a-fA-F]{6}$/),
     }),
@@ -155,9 +155,9 @@ const border_mark = z.lazy(() =>
 );
 
 const breakout_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("breakout")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       mode: z.union([z.literal("wide"), z.literal("full-width")]),
       width: z.number().optional(),
     }),
@@ -165,17 +165,17 @@ const breakout_mark = z.lazy(() =>
 );
 
 const bulletList_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("bulletList")]),
-    attrs: z.object({ localId: z.string().optional() }).optional(),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
     content: z.array(listItem_node).min(1),
   }),
 );
 
 const caption_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("caption")]),
-    attrs: z.object({ localId: z.string().optional() }).optional(),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
     content: z
       .array(
         z.union([
@@ -206,15 +206,15 @@ const code_inline_node = z.lazy(() =>
 );
 
 const code_mark = z.lazy(() =>
-  z.object({ type: z.union([z.literal("code")]) }),
+  z.strictObject({ type: z.union([z.literal("code")]) }),
 );
 
 const codeBlock_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("codeBlock")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z
-      .object({
+      .strictObject({
         language: z.string().optional(),
         uniqueId: z.string().optional(),
         localId: z.string().optional(),
@@ -225,11 +225,11 @@ const codeBlock_node = z.lazy(() =>
 );
 
 const codeBlock_root_only_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("codeBlock")]),
     marks: z.array(breakout_mark).optional(),
     attrs: z
-      .object({
+      .strictObject({
         language: z.string().optional(),
         uniqueId: z.string().optional(),
         localId: z.string().optional(),
@@ -240,16 +240,16 @@ const codeBlock_root_only_node = z.lazy(() =>
 );
 
 const dataConsumer_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("dataConsumer")]),
-    attrs: z.object({ sources: z.array(z.string()).min(1) }),
+    attrs: z.strictObject({ sources: z.array(z.string()).min(1) }),
   }),
 );
 
 const date_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("date")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       timestamp: z.string().min(1),
       localId: z.string().optional(),
     }),
@@ -257,23 +257,23 @@ const date_node = z.lazy(() =>
 );
 
 const decisionItem_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("decisionItem")]),
-    attrs: z.object({ localId: z.string(), state: z.string() }),
+    attrs: z.strictObject({ localId: z.string(), state: z.string() }),
     content: z.array(inline_node).optional(),
   }),
 );
 
 const decisionList_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("decisionList")]),
-    attrs: z.object({ localId: z.string() }),
+    attrs: z.strictObject({ localId: z.string() }),
     content: z.array(decisionItem_node).min(1),
   }),
 );
 
 const doc_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("doc")]),
     content: z.array(
       z.union([
@@ -309,12 +309,14 @@ const doc_node = z.lazy(() =>
   }),
 );
 
-const em_mark = z.lazy(() => z.object({ type: z.union([z.literal("em")]) }));
+const em_mark = z.lazy(() =>
+  z.strictObject({ type: z.union([z.literal("em")]) }),
+);
 
 const embedCard_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("embedCard")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       url: z.string(),
       layout: z.union([
         z.literal("wide"),
@@ -334,9 +336,9 @@ const embedCard_node = z.lazy(() =>
 );
 
 const emoji_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("emoji")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       shortName: z.string(),
       id: z.string().optional(),
       text: z.string().optional(),
@@ -346,11 +348,14 @@ const emoji_node = z.lazy(() =>
 );
 
 const expand_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("expand")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z
-      .object({ title: z.string().optional(), localId: z.string().optional() })
+      .strictObject({
+        title: z.string().optional(),
+        localId: z.string().optional(),
+      })
       .optional(),
     content: z
       .array(
@@ -361,11 +366,14 @@ const expand_node = z.lazy(() =>
 );
 
 const expand_root_only_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("expand")]),
     marks: z.array(breakout_mark).optional(),
     attrs: z
-      .object({ title: z.string().optional(), localId: z.string().optional() })
+      .strictObject({
+        title: z.string().optional(),
+        localId: z.string().optional(),
+      })
       .optional(),
     content: z
       .array(
@@ -376,10 +384,10 @@ const expand_root_only_node = z.lazy(() =>
 );
 
 const extension_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("extension")]),
     marks: z.array(z.unknown()).optional(),
-    attrs: z.object({
+    attrs: z.strictObject({
       extensionKey: z.string().min(1),
       extensionType: z.string().min(1),
       parameters: z.unknown().optional(),
@@ -429,9 +437,9 @@ const formatted_text_inline_node = z.lazy(() =>
 );
 
 const fragment_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("fragment")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       localId: z.string().min(1),
       name: z.string().optional(),
     }),
@@ -439,10 +447,10 @@ const fragment_mark = z.lazy(() =>
 );
 
 const hardBreak_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("hardBreak")]),
     attrs: z
-      .object({
+      .strictObject({
         text: z.union([z.literal("\n")]).optional(),
         localId: z.string().optional(),
       })
@@ -451,10 +459,10 @@ const hardBreak_node = z.lazy(() =>
 );
 
 const heading_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("heading")]),
     marks: z.array(z.unknown()).optional(),
-    attrs: z.object({
+    attrs: z.strictObject({
       level: z.number().min(1).max(6),
       localId: z.string().optional(),
     }),
@@ -484,9 +492,9 @@ const heading_with_no_marks_node = z.lazy(() =>
 );
 
 const indentation_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("indentation")]),
-    attrs: z.object({ level: z.number().min(1).max(6) }),
+    attrs: z.strictObject({ level: z.number().min(1).max(6) }),
   }),
 );
 
@@ -507,20 +515,20 @@ const inline_node = z.lazy(() =>
 );
 
 const inlineCard_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("inlineCard")]),
     attrs: z.union([
-      z.object({ url: z.string(), localId: z.string().optional() }),
-      z.object({ data: z.unknown(), localId: z.string().optional() }),
+      z.strictObject({ url: z.string(), localId: z.string().optional() }),
+      z.strictObject({ data: z.unknown(), localId: z.string().optional() }),
     ]),
   }),
 );
 
 const inlineExtension_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("inlineExtension")]),
     marks: z.array(z.unknown()).optional(),
-    attrs: z.object({
+    attrs: z.strictObject({
       extensionKey: z.string().min(1),
       extensionType: z.string().min(1),
       parameters: z.unknown().optional(),
@@ -540,9 +548,9 @@ const inlineExtension_with_marks_node = z.lazy(() =>
 );
 
 const layoutColumn_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("layoutColumn")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       width: z.number().max(100),
       localId: z.string().optional(),
     }),
@@ -561,18 +569,18 @@ const layoutSection_full_node = z.lazy(() =>
 );
 
 const layoutSection_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("layoutSection")]),
     marks: z.array(breakout_mark).optional(),
-    attrs: z.object({ localId: z.string().optional() }).optional(),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
     content: z.array(layoutColumn_node),
   }),
 );
 
 const link_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("link")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       href: z.string(),
       title: z.string().optional(),
       id: z.string().optional(),
@@ -583,21 +591,21 @@ const link_mark = z.lazy(() =>
 );
 
 const listItem_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("listItem")]),
-    attrs: z.object({ localId: z.string().optional() }).optional(),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
     content: z.array(z.unknown()).min(1),
   }),
 );
 
 const media_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("media")]),
     marks: z
       .array(z.union([link_mark, annotation_mark, border_mark]))
       .optional(),
     attrs: z.union([
-      z.object({
+      z.strictObject({
         type: z.union([z.literal("link"), z.literal("file")]),
         localId: z.string().optional(),
         id: z.string().min(1),
@@ -607,7 +615,7 @@ const media_node = z.lazy(() =>
         occurrenceKey: z.string().min(1).optional(),
         width: z.number().optional(),
       }),
-      z.object({
+      z.strictObject({
         type: z.union([z.literal("external")]),
         localId: z.string().optional(),
         alt: z.string().optional(),
@@ -620,19 +628,19 @@ const media_node = z.lazy(() =>
 );
 
 const mediaGroup_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("mediaGroup")]),
     content: z.array(media_node).min(1),
   }),
 );
 
 const mediaInline_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("mediaInline")]),
     marks: z
       .array(z.union([link_mark, annotation_mark, border_mark]))
       .optional(),
-    attrs: z.object({
+    attrs: z.strictObject({
       type: z
         .union([z.literal("link"), z.literal("file"), z.literal("image")])
         .optional(),
@@ -668,7 +676,7 @@ const mediaSingle_node = z.lazy(() =>
     marks: z.array(link_mark).optional(),
     attrs: z
       .union([
-        z.object({
+        z.strictObject({
           localId: z.string().optional(),
           width: z.number().max(100).optional(),
           layout: z.union([
@@ -682,7 +690,7 @@ const mediaSingle_node = z.lazy(() =>
           ]),
           widthType: z.union([z.literal("percentage")]).optional(),
         }),
-        z.object({
+        z.strictObject({
           localId: z.string().optional(),
           width: z.number(),
           widthType: z.union([z.literal("pixel")]),
@@ -702,9 +710,9 @@ const mediaSingle_node = z.lazy(() =>
 );
 
 const mention_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("mention")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       id: z.string(),
       localId: z.string().optional(),
       text: z.string().optional(),
@@ -740,9 +748,9 @@ const nestedExpand_content = z.lazy(() =>
 );
 
 const nestedExpand_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("nestedExpand")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       title: z.string().optional(),
       localId: z.string().optional(),
     }),
@@ -780,19 +788,22 @@ const non_nestable_block_content = z.lazy(() =>
 );
 
 const orderedList_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("orderedList")]),
     attrs: z
-      .object({ order: z.number().optional(), localId: z.string().optional() })
+      .strictObject({
+        order: z.number().optional(),
+        localId: z.string().optional(),
+      })
       .optional(),
     content: z.array(listItem_node).min(1),
   }),
 );
 
 const panel_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("panel")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       panelType: z.union([
         z.literal("info"),
         z.literal("note"),
@@ -831,10 +842,10 @@ const panel_node = z.lazy(() =>
 );
 
 const paragraph_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("paragraph")]),
     marks: z.array(z.unknown()).optional(),
-    attrs: z.object({ localId: z.string().optional() }).optional(),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
     content: z.array(inline_node).optional(),
   }),
 );
@@ -861,23 +872,23 @@ const paragraph_with_no_marks_node = z.lazy(() =>
 );
 
 const placeholder_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("placeholder")]),
-    attrs: z.object({ text: z.string(), localId: z.string().optional() }),
+    attrs: z.strictObject({ text: z.string(), localId: z.string().optional() }),
   }),
 );
 
 const rule_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("rule")]),
-    attrs: z.object({ localId: z.string().optional() }).optional(),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
   }),
 );
 
 const status_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("status")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       text: z.string().min(1),
       color: z.union([
         z.literal("neutral"),
@@ -894,17 +905,19 @@ const status_node = z.lazy(() =>
 );
 
 const strike_mark = z.lazy(() =>
-  z.object({ type: z.union([z.literal("strike")]) }),
+  z.strictObject({ type: z.union([z.literal("strike")]) }),
 );
 
 const strong_mark = z.lazy(() =>
-  z.object({ type: z.union([z.literal("strong")]) }),
+  z.strictObject({ type: z.union([z.literal("strong")]) }),
 );
 
 const subsup_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("subsup")]),
-    attrs: z.object({ type: z.union([z.literal("sub"), z.literal("sup")]) }),
+    attrs: z.strictObject({
+      type: z.union([z.literal("sub"), z.literal("sup")]),
+    }),
   }),
 );
 
@@ -938,10 +951,10 @@ const table_cell_content = z.lazy(() =>
 );
 
 const table_cell_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("tableCell")]),
     attrs: z
-      .object({
+      .strictObject({
         colspan: z.number().optional(),
         rowspan: z.number().optional(),
         colwidth: z.array(z.number()).optional(),
@@ -954,10 +967,10 @@ const table_cell_node = z.lazy(() =>
 );
 
 const table_header_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("tableHeader")]),
     attrs: z
-      .object({
+      .strictObject({
         colspan: z.number().optional(),
         rowspan: z.number().optional(),
         colwidth: z.array(z.number()).optional(),
@@ -970,11 +983,11 @@ const table_header_node = z.lazy(() =>
 );
 
 const table_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("table")]),
     marks: z.array(fragment_mark).optional(),
     attrs: z
-      .object({
+      .strictObject({
         displayMode: z
           .union([z.literal("default"), z.literal("fixed")])
           .optional(),
@@ -998,17 +1011,17 @@ const table_node = z.lazy(() =>
 );
 
 const table_row_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("tableRow")]),
-    attrs: z.object({ localId: z.string().optional() }).optional(),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
     content: z.array(z.union([table_cell_node, table_header_node])),
   }),
 );
 
 const taskItem_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("taskItem")]),
-    attrs: z.object({
+    attrs: z.strictObject({
       localId: z.string(),
       state: z.union([z.literal("TODO"), z.literal("DONE")]),
     }),
@@ -1017,15 +1030,15 @@ const taskItem_node = z.lazy(() =>
 );
 
 const taskList_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("taskList")]),
-    attrs: z.object({ localId: z.string() }),
+    attrs: z.strictObject({ localId: z.string() }),
     content: z.array(z.unknown()).min(1),
   }),
 );
 
 const text_node = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("text")]),
     marks: z.array(z.unknown()).optional(),
     text: z.string().min(1),
@@ -1040,12 +1053,12 @@ const text_with_no_marks_node = z.lazy(() =>
 );
 
 const textColor_mark = z.lazy(() =>
-  z.object({
+  z.strictObject({
     type: z.union([z.literal("textColor")]),
-    attrs: z.object({ color: z.string().regex(/^#[0-9a-fA-F]{6}$/) }),
+    attrs: z.strictObject({ color: z.string().regex(/^#[0-9a-fA-F]{6}$/) }),
   }),
 );
 
 const underline_mark = z.lazy(() =>
-  z.object({ type: z.union([z.literal("underline")]) }),
+  z.strictObject({ type: z.union([z.literal("underline")]) }),
 );

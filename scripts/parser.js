@@ -17,12 +17,17 @@ function parseNode(schema = {}) {
   );
 }
 
-function parseObject(schema = {}, name) {
+function parseObject(schema = {}) {
   if (schema.type !== "object") {
     return "";
   }
 
-  let str = `z.object({`;
+  let str = "";
+  if (Boolean(schema.additionalProperties)) {
+    str += `z.object({`;
+  } else {
+    str += `z.strictObject({`;
+  }
 
   str += Object.entries(schema.properties)
     .map(([field, def]) => {
@@ -31,7 +36,9 @@ function parseObject(schema = {}, name) {
     })
     .join(" ");
 
-  return str + `})`;
+  str += `})`;
+
+  return str;
 }
 
 function parseArray(schema = {}) {
