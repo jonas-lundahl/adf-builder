@@ -1,41 +1,44 @@
-type alignment_mark = { type: "alignment"; attrs: { align: "center" | "end" } };
+type AlignmentMarkType = {
+  type: "alignment";
+  attrs: { align: "center" | "end" };
+};
 
-type annotation_mark = {
+type AnnotationMarkType = {
   type: "annotation";
   attrs: { id: string; annotationType: "inlineComment" };
 };
 
-type backgroundColor_mark = {
+type BackgroundColorMarkType = {
   type: "backgroundColor";
   attrs: { color: string };
 };
 
-type block_content =
-  | blockCard_node
-  | paragraph_with_no_marks_node
-  | paragraph_with_alignment_node
-  | paragraph_with_indentation_node
-  | mediaSingle_caption_node
-  | mediaSingle_full_node
-  | codeBlock_node
-  | taskList_node
-  | bulletList_node
-  | orderedList_node
-  | heading_with_no_marks_node
-  | heading_with_alignment_node
-  | heading_with_indentation_node
-  | mediaGroup_node
-  | decisionList_node
-  | rule_node
-  | panel_node
-  | blockquote_node
-  | extension_with_marks_node
-  | embedCard_node
-  | table_node
-  | expand_node
-  | bodiedExtension_with_marks_node;
+type BlockContentType =
+  | BlockCardNodeType
+  | ParagraphWithNoMarksNodeType
+  | ParagraphWithAlignmentNodeType
+  | ParagraphWithIndentationNodeType
+  | MediaSingleCaptionNodeType
+  | MediaSingleFullNodeType
+  | CodeBlockNodeType
+  | TaskListNodeType
+  | BulletListNodeType
+  | OrderedListNodeType
+  | HeadingWithNoMarksNodeType
+  | HeadingWithAlignmentNodeType
+  | HeadingWithIndentationNodeType
+  | MediaGroupNodeType
+  | DecisionListNodeType
+  | RuleNodeType
+  | PanelNodeType
+  | BlockquoteNodeType
+  | ExtensionWithMarksNodeType
+  | EmbedCardNodeType
+  | TableNodeType
+  | ExpandNodeType
+  | BodiedExtensionWithMarksNodeType;
 
-type blockCard_node = {
+type BlockCardNodeType = {
   type: "blockCard";
   attrs:
     | {
@@ -60,22 +63,22 @@ type blockCard_node = {
     | { data: unknown; localId?: string };
 };
 
-type blockquote_node = {
+type BlockquoteNodeType = {
   type: "blockquote";
   attrs?: { localId?: string };
   content: (
-    | paragraph_with_no_marks_node
-    | orderedList_node
-    | bulletList_node
-    | codeBlock_node
-    | mediaSingle_caption_node
-    | mediaSingle_full_node
-    | mediaGroup_node
-    | extension_with_marks_node
+    | ParagraphWithNoMarksNodeType
+    | OrderedListNodeType
+    | BulletListNodeType
+    | CodeBlockNodeType
+    | MediaSingleCaptionNodeType
+    | MediaSingleFullNodeType
+    | MediaGroupNodeType
+    | ExtensionWithMarksNodeType
   )[];
 };
 
-type bodiedExtension_node = {
+type BodiedExtensionNodeType = {
   type: "bodiedExtension";
   marks?: unknown[];
   attrs: {
@@ -86,119 +89,125 @@ type bodiedExtension_node = {
     layout?: "wide" | "full-width" | "default";
     localId?: string;
   };
-  content: non_nestable_block_content[];
+  content: NonNestableBlockContentType[];
 };
 
-type bodiedExtension_with_marks_node = bodiedExtension_node & {
-  marks?: (dataConsumer_mark | fragment_mark)[];
+type BodiedExtensionWithMarksNodeType = BodiedExtensionNodeType & {
+  marks?: (DataConsumerMarkType | FragmentMarkType)[];
   [key: string]: unknown;
 };
 
-type border_mark = { type: "border"; attrs: { size: number; color: string } };
+type BorderMarkType = {
+  type: "border";
+  attrs: { size: number; color: string };
+};
 
-type breakout_mark = {
+type BreakoutMarkType = {
   type: "breakout";
   attrs: { mode: "wide" | "full-width"; width?: number };
 };
 
-type bulletList_node = {
+type BulletListNodeType = {
   type: "bulletList";
   attrs?: { localId?: string };
-  content: listItem_node[];
+  content: ListItemNodeType[];
 };
 
-type caption_node = {
+type CaptionNodeType = {
   type: "caption";
   attrs?: { localId?: string };
   content?: (
-    | hardBreak_node
-    | mention_node
-    | emoji_node
-    | date_node
-    | placeholder_node
-    | inlineCard_node
-    | status_node
-    | formatted_text_inline_node
-    | code_inline_node
+    | HardBreakNodeType
+    | MentionNodeType
+    | EmojiNodeType
+    | DateNodeType
+    | PlaceholderNodeType
+    | InlineCardNodeType
+    | StatusNodeType
+    | FormattedTextInlineNodeType
+    | CodeInlineNodeType
   )[];
 };
 
-type code_inline_node = text_node & {
-  marks?: (code_mark | link_mark | annotation_mark)[];
+type CodeInlineNodeType = TextNodeType & {
+  marks?: (CodeMarkType | LinkMarkType | AnnotationMarkType)[];
   [key: string]: unknown;
 };
 
-type code_mark = { type: "code" };
+type CodeMarkType = { type: "code" };
 
-type codeBlock_node = {
+type CodeBlockNodeType = {
   type: "codeBlock";
   marks?: unknown[];
   attrs?: { language?: string; uniqueId?: string; localId?: string };
-  content?: text_with_no_marks_node[];
+  content?: TextWithNoMarksNodeType[];
 };
 
-type codeBlock_root_only_node = {
+type CodeBlockRootOnlyNodeType = {
   type: "codeBlock";
-  marks?: breakout_mark[];
+  marks?: BreakoutMarkType[];
   attrs?: { language?: string; uniqueId?: string; localId?: string };
-  content?: text_with_no_marks_node[];
+  content?: TextWithNoMarksNodeType[];
 };
 
-type dataConsumer_mark = { type: "dataConsumer"; attrs: { sources: string[] } };
+type DataConsumerMarkType = {
+  type: "dataConsumer";
+  attrs: { sources: string[] };
+};
 
-type date_node = {
+type DateNodeType = {
   type: "date";
   attrs: { timestamp: string; localId?: string };
 };
 
-type decisionItem_node = {
+type DecisionItemNodeType = {
   type: "decisionItem";
   attrs: { localId: string; state: string };
-  content?: inline_node[];
+  content?: InlineNodeType[];
 };
 
-type decisionList_node = {
+type DecisionListNodeType = {
   type: "decisionList";
   attrs: { localId: string };
-  content: decisionItem_node[];
+  content: DecisionItemNodeType[];
 };
 
-type doc_node = {
+type DocNodeType = {
   type: "doc";
   content: (
-    | blockCard_node
-    | codeBlock_node
-    | mediaSingle_caption_node
-    | mediaSingle_full_node
-    | paragraph_with_alignment_node
-    | paragraph_with_indentation_node
-    | paragraph_with_no_marks_node
-    | taskList_node
-    | orderedList_node
-    | bulletList_node
-    | blockquote_node
-    | decisionList_node
-    | embedCard_node
-    | extension_with_marks_node
-    | heading_with_indentation_node
-    | heading_with_no_marks_node
-    | heading_with_alignment_node
-    | mediaGroup_node
-    | rule_node
-    | panel_node
-    | table_node
-    | bodiedExtension_with_marks_node
-    | expand_node
-    | codeBlock_root_only_node
-    | layoutSection_full_node
-    | expand_root_only_node
+    | BlockCardNodeType
+    | CodeBlockNodeType
+    | MediaSingleCaptionNodeType
+    | MediaSingleFullNodeType
+    | ParagraphWithAlignmentNodeType
+    | ParagraphWithIndentationNodeType
+    | ParagraphWithNoMarksNodeType
+    | TaskListNodeType
+    | OrderedListNodeType
+    | BulletListNodeType
+    | BlockquoteNodeType
+    | DecisionListNodeType
+    | EmbedCardNodeType
+    | ExtensionWithMarksNodeType
+    | HeadingWithIndentationNodeType
+    | HeadingWithNoMarksNodeType
+    | HeadingWithAlignmentNodeType
+    | MediaGroupNodeType
+    | RuleNodeType
+    | PanelNodeType
+    | TableNodeType
+    | BodiedExtensionWithMarksNodeType
+    | ExpandNodeType
+    | CodeBlockRootOnlyNodeType
+    | LayoutSectionFullNodeType
+    | ExpandRootOnlyNodeType
   )[];
   version: 1;
 };
 
-type em_mark = { type: "em" };
+type EmMarkType = { type: "em" };
 
-type embedCard_node = {
+type EmbedCardNodeType = {
   type: "embedCard";
   attrs: {
     url: string;
@@ -217,26 +226,26 @@ type embedCard_node = {
   };
 };
 
-type emoji_node = {
+type EmojiNodeType = {
   type: "emoji";
   attrs: { shortName: string; id?: string; text?: string; localId?: string };
 };
 
-type expand_node = {
+type ExpandNodeType = {
   type: "expand";
   marks?: unknown[];
   attrs?: { title?: string; localId?: string };
-  content: (non_nestable_block_content | nestedExpand_with_no_marks_node)[];
+  content: (NonNestableBlockContentType | NestedExpandWithNoMarksNodeType)[];
 };
 
-type expand_root_only_node = {
+type ExpandRootOnlyNodeType = {
   type: "expand";
-  marks?: breakout_mark[];
+  marks?: BreakoutMarkType[];
   attrs?: { title?: string; localId?: string };
-  content: (non_nestable_block_content | nestedExpand_with_no_marks_node)[];
+  content: (NonNestableBlockContentType | NestedExpandWithNoMarksNodeType)[];
 };
 
-type extension_node = {
+type ExtensionNodeType = {
   type: "extension";
   marks?: unknown[];
   attrs: {
@@ -249,81 +258,81 @@ type extension_node = {
   };
 };
 
-type extension_with_marks_node = extension_node & {
-  marks?: (dataConsumer_mark | fragment_mark)[];
+type ExtensionWithMarksNodeType = ExtensionNodeType & {
+  marks?: (DataConsumerMarkType | FragmentMarkType)[];
   [key: string]: unknown;
 };
 
-type formatted_text_inline_node = text_node & {
+type FormattedTextInlineNodeType = TextNodeType & {
   marks?: (
-    | link_mark
-    | em_mark
-    | strong_mark
-    | strike_mark
-    | subsup_mark
-    | underline_mark
-    | textColor_mark
-    | annotation_mark
-    | backgroundColor_mark
+    | LinkMarkType
+    | EmMarkType
+    | StrongMarkType
+    | StrikeMarkType
+    | SubsupMarkType
+    | UnderlineMarkType
+    | TextColorMarkType
+    | AnnotationMarkType
+    | BackgroundColorMarkType
   )[];
   [key: string]: unknown;
 };
 
-type fragment_mark = {
+type FragmentMarkType = {
   type: "fragment";
   attrs: { localId: string; name?: string };
 };
 
-type hardBreak_node = {
+type HardBreakNodeType = {
   type: "hardBreak";
   attrs?: { text?: "\n"; localId?: string };
 };
 
-type heading_node = {
+type HeadingNodeType = {
   type: "heading";
   marks?: unknown[];
   attrs: { level: number; localId?: string };
-  content?: inline_node[];
+  content?: InlineNodeType[];
 };
 
-type heading_with_alignment_node = heading_node & {
-  marks?: alignment_mark[];
+type HeadingWithAlignmentNodeType = HeadingNodeType & {
+  marks?: AlignmentMarkType[];
   [key: string]: unknown;
 };
 
-type heading_with_indentation_node = heading_node & {
-  marks?: indentation_mark[];
+type HeadingWithIndentationNodeType = HeadingNodeType & {
+  marks?: IndentationMarkType[];
   [key: string]: unknown;
 };
 
-type heading_with_no_marks_node = heading_node & {
+type HeadingWithNoMarksNodeType = HeadingNodeType & {
   marks?: unknown[];
   [key: string]: unknown;
 };
 
-type indentation_mark = { type: "indentation"; attrs: { level: number } };
+type IndentationMarkType = { type: "indentation"; attrs: { level: number } };
 
-type inline_node =
-  | formatted_text_inline_node
-  | code_inline_node
-  | date_node
-  | emoji_node
-  | hardBreak_node
-  | inlineCard_node
-  | mention_node
-  | placeholder_node
-  | status_node
-  | inlineExtension_with_marks_node
-  | mediaInline_node;
+type InlineNodeType =
+  | FormattedTextInlineNodeType
+  | CodeInlineNodeType
+  | DateNodeType
+  | EmojiNodeType
+  | HardBreakNodeType
+  | InlineCardNodeType
+  | MentionNodeType
+  | PlaceholderNodeType
+  | StatusNodeType
+  | InlineExtensionWithMarksNodeType
+  | MediaInlineNodeType;
 
-type inlineCard_node = {
+type InlineCardNodeType = {
   type: "inlineCard";
   attrs:
     | { url: string; localId?: string }
     | { data: unknown; localId?: string };
 };
 
-type inlineExtension_node = {
+type InlineExtensionNodeType = {
   type: "inlineExtension";
   marks?: unknown[];
   attrs: {
@@ -335,31 +344,31 @@ type inlineExtension_node = {
   };
 };
 
-type inlineExtension_with_marks_node = inlineExtension_node & {
-  marks?: (dataConsumer_mark | fragment_mark)[];
+type InlineExtensionWithMarksNodeType = InlineExtensionNodeType & {
+  marks?: (DataConsumerMarkType | FragmentMarkType)[];
   [key: string]: unknown;
 };
 
-type layoutColumn_node = {
+type LayoutColumnNodeType = {
   type: "layoutColumn";
   attrs: { width: number; localId?: string };
-  content: block_content[];
+  content: BlockContentType[];
 };
 
-type layoutSection_full_node = layoutSection_node & {
-  marks?: breakout_mark[];
-  content: layoutColumn_node[];
+type LayoutSectionFullNodeType = LayoutSectionNodeType & {
+  marks?: BreakoutMarkType[];
+  content: LayoutColumnNodeType[];
   [key: string]: unknown;
 };
 
-type layoutSection_node = {
+type LayoutSectionNodeType = {
   type: "layoutSection";
-  marks?: breakout_mark[];
+  marks?: BreakoutMarkType[];
   attrs?: { localId?: string };
-  content: layoutColumn_node[];
+  content: LayoutColumnNodeType[];
 };
 
-type link_mark = {
+type LinkMarkType = {
   type: "link";
   attrs: {
     href: string;
@@ -370,33 +379,33 @@ type link_mark = {
   };
 };
 
-type listItem_node = {
+type ListItemNodeType = {
   type: "listItem";
   attrs?: { localId?: string };
   content: [
     (
-      | paragraph_with_no_marks_node
-      | mediaSingle_caption_node
-      | mediaSingle_full_node
-      | codeBlock_node
-      | extension_with_marks_node
+      | ParagraphWithNoMarksNodeType
+      | MediaSingleCaptionNodeType
+      | MediaSingleFullNodeType
+      | CodeBlockNodeType
+      | ExtensionWithMarksNodeType
     ),
     (
-      | paragraph_with_no_marks_node
-      | bulletList_node
-      | orderedList_node
-      | taskList_node
-      | mediaSingle_caption_node
-      | mediaSingle_full_node
-      | codeBlock_node
-      | extension_with_marks_node
+      | ParagraphWithNoMarksNodeType
+      | BulletListNodeType
+      | OrderedListNodeType
+      | TaskListNodeType
+      | MediaSingleCaptionNodeType
+      | MediaSingleFullNodeType
+      | CodeBlockNodeType
+      | ExtensionWithMarksNodeType
     ),
   ][];
 };
 
-type media_node = {
+type MediaNodeType = {
   type: "media";
-  marks?: (link_mark | annotation_mark | border_mark)[];
+  marks?: (LinkMarkType | AnnotationMarkType | BorderMarkType)[];
   attrs:
     | {
         type: "link" | "file";
@@ -418,11 +427,11 @@ type media_node = {
       };
 };
 
-type mediaGroup_node = { type: "mediaGroup"; content: media_node[] };
+type MediaGroupNodeType = { type: "mediaGroup"; content: MediaNodeType[] };
 
-type mediaInline_node = {
+type MediaInlineNodeType = {
   type: "mediaInline";
-  marks?: (link_mark | annotation_mark | border_mark)[];
+  marks?: (LinkMarkType | AnnotationMarkType | BorderMarkType)[];
   attrs: {
     type?: "link" | "file" | "image";
     localId?: string;
@@ -436,19 +445,19 @@ type mediaInline_node = {
   };
 };
 
-type mediaSingle_caption_node = mediaSingle_node & {
-  content: [media_node, caption_node][];
+type MediaSingleCaptionNodeType = MediaSingleNodeType & {
+  content: [MediaNodeType, CaptionNodeType][];
   [key: string]: unknown;
 };
 
-type mediaSingle_full_node = mediaSingle_node & {
-  content: media_node[];
+type MediaSingleFullNodeType = MediaSingleNodeType & {
+  content: MediaNodeType[];
   [key: string]: unknown;
 };
 
-type mediaSingle_node = {
+type MediaSingleNodeType = {
   type: "mediaSingle";
-  marks?: link_mark[];
+  marks?: LinkMarkType[];
   attrs?:
     | {
         localId?: string;
@@ -479,7 +488,7 @@ type mediaSingle_node = {
   [key: string]: unknown;
 };
 
-type mention_node = {
+type MentionNodeType = {
   type: "mention";
   attrs: {
     id: string;
@@ -490,60 +499,60 @@ type mention_node = {
   };
 };
 
-type nestedExpand_content = (
-  | paragraph_with_no_marks_node
-  | heading_with_no_marks_node
-  | mediaSingle_caption_node
-  | mediaSingle_full_node
-  | mediaGroup_node
-  | codeBlock_node
-  | bulletList_node
-  | orderedList_node
-  | taskList_node
-  | decisionList_node
-  | rule_node
-  | panel_node
-  | blockquote_node
-  | extension_with_marks_node
+type NestedExpandContentType = (
+  | ParagraphWithNoMarksNodeType
+  | HeadingWithNoMarksNodeType
+  | MediaSingleCaptionNodeType
+  | MediaSingleFullNodeType
+  | MediaGroupNodeType
+  | CodeBlockNodeType
+  | BulletListNodeType
+  | OrderedListNodeType
+  | TaskListNodeType
+  | DecisionListNodeType
+  | RuleNodeType
+  | PanelNodeType
+  | BlockquoteNodeType
+  | ExtensionWithMarksNodeType
 )[];
 
-type nestedExpand_node = {
+type NestedExpandNodeType = {
   type: "nestedExpand";
   attrs: { title?: string; localId?: string };
-  content: nestedExpand_content;
+  content: NestedExpandContentType;
 };
 
-type nestedExpand_with_no_marks_node = nestedExpand_node & {
+type NestedExpandWithNoMarksNodeType = NestedExpandNodeType & {
   marks?: unknown[];
   [key: string]: unknown;
 };
 
-type non_nestable_block_content =
-  | paragraph_with_no_marks_node
-  | panel_node
-  | blockquote_node
-  | orderedList_node
-  | bulletList_node
-  | rule_node
-  | heading_with_no_marks_node
-  | codeBlock_node
-  | mediaGroup_node
-  | mediaSingle_caption_node
-  | mediaSingle_full_node
-  | decisionList_node
-  | taskList_node
-  | table_node
-  | blockCard_node
-  | embedCard_node
-  | extension_with_marks_node;
+type NonNestableBlockContentType =
+  | ParagraphWithNoMarksNodeType
+  | PanelNodeType
+  | BlockquoteNodeType
+  | OrderedListNodeType
+  | BulletListNodeType
+  | RuleNodeType
+  | HeadingWithNoMarksNodeType
+  | CodeBlockNodeType
+  | MediaGroupNodeType
+  | MediaSingleCaptionNodeType
+  | MediaSingleFullNodeType
+  | DecisionListNodeType
+  | TaskListNodeType
+  | TableNodeType
+  | BlockCardNodeType
+  | EmbedCardNodeType
+  | ExtensionWithMarksNodeType;
 
-type orderedList_node = {
+type OrderedListNodeType = {
   type: "orderedList";
   attrs?: { order?: number; localId?: string };
-  content: listItem_node[];
+  content: ListItemNodeType[];
 };
 
-type panel_node = {
+type PanelNodeType = {
   type: "panel";
   attrs: {
     panelType:
@@ -561,52 +570,52 @@ type panel_node = {
     localId?: string;
   };
   content: (
-    | paragraph_with_no_marks_node
-    | heading_with_no_marks_node
-    | bulletList_node
-    | orderedList_node
-    | blockCard_node
-    | mediaGroup_node
-    | mediaSingle_caption_node
-    | mediaSingle_full_node
-    | codeBlock_node
-    | taskList_node
-    | rule_node
-    | decisionList_node
-    | extension_with_marks_node
+    | ParagraphWithNoMarksNodeType
+    | HeadingWithNoMarksNodeType
+    | BulletListNodeType
+    | OrderedListNodeType
+    | BlockCardNodeType
+    | MediaGroupNodeType
+    | MediaSingleCaptionNodeType
+    | MediaSingleFullNodeType
+    | CodeBlockNodeType
+    | TaskListNodeType
+    | RuleNodeType
+    | DecisionListNodeType
+    | ExtensionWithMarksNodeType
   )[];
 };
 
-type paragraph_node = {
+type ParagraphNodeType = {
   type: "paragraph";
   marks?: unknown[];
   attrs?: { localId?: string };
-  content?: inline_node[];
+  content?: InlineNodeType[];
 };
 
-type paragraph_with_alignment_node = paragraph_node & {
-  marks?: alignment_mark[];
+type ParagraphWithAlignmentNodeType = ParagraphNodeType & {
+  marks?: AlignmentMarkType[];
   [key: string]: unknown;
 };
 
-type paragraph_with_indentation_node = paragraph_node & {
-  marks?: indentation_mark[];
+type ParagraphWithIndentationNodeType = ParagraphNodeType & {
+  marks?: IndentationMarkType[];
   [key: string]: unknown;
 };
 
-type paragraph_with_no_marks_node = paragraph_node & {
+type ParagraphWithNoMarksNodeType = ParagraphNodeType & {
   marks?: unknown[];
   [key: string]: unknown;
 };
 
-type placeholder_node = {
+type PlaceholderNodeType = {
   type: "placeholder";
   attrs: { text: string; localId?: string };
 };
 
-type rule_node = { type: "rule"; attrs?: { localId?: string } };
+type RuleNodeType = { type: "rule"; attrs?: { localId?: string } };
 
-type status_node = {
+type StatusNodeType = {
   type: "status";
   attrs: {
     text: string;
@@ -616,36 +625,36 @@ type status_node = {
   };
 };
 
-type strike_mark = { type: "strike" };
+type StrikeMarkType = { type: "strike" };
 
-type strong_mark = { type: "strong" };
+type StrongMarkType = { type: "strong" };
 
-type subsup_mark = { type: "subsup"; attrs: { type: "sub" | "sup" } };
+type SubsupMarkType = { type: "subsup"; attrs: { type: "sub" | "sup" } };
 
-type table_cell_content = (
-  | paragraph_with_no_marks_node
-  | paragraph_with_alignment_node
-  | panel_node
-  | blockquote_node
-  | orderedList_node
-  | bulletList_node
-  | rule_node
-  | heading_with_no_marks_node
-  | heading_with_alignment_node
-  | heading_with_indentation_node
-  | codeBlock_node
-  | mediaSingle_caption_node
-  | mediaSingle_full_node
-  | mediaGroup_node
-  | decisionList_node
-  | taskList_node
-  | blockCard_node
-  | embedCard_node
-  | extension_with_marks_node
-  | nestedExpand_with_no_marks_node
+type TableCellContentType = (
+  | ParagraphWithNoMarksNodeType
+  | ParagraphWithAlignmentNodeType
+  | PanelNodeType
+  | BlockquoteNodeType
+  | OrderedListNodeType
+  | BulletListNodeType
+  | RuleNodeType
+  | HeadingWithNoMarksNodeType
+  | HeadingWithAlignmentNodeType
+  | HeadingWithIndentationNodeType
+  | CodeBlockNodeType
+  | MediaSingleCaptionNodeType
+  | MediaSingleFullNodeType
+  | MediaGroupNodeType
+  | DecisionListNodeType
+  | TaskListNodeType
+  | BlockCardNodeType
+  | EmbedCardNodeType
+  | ExtensionWithMarksNodeType
+  | NestedExpandWithNoMarksNodeType
 )[];
 
-type table_cell_node = {
+type TableCellNodeType = {
   type: "tableCell";
   attrs?: {
     colspan?: number;
@@ -654,10 +663,10 @@ type table_cell_node = {
     background?: string;
     localId?: string;
   };
-  content: table_cell_content;
+  content: TableCellContentType;
 };
 
-type table_header_node = {
+type TableHeaderNodeType = {
   type: "tableHeader";
   attrs?: {
     colspan?: number;
@@ -666,12 +675,12 @@ type table_header_node = {
     background?: string;
     localId?: string;
   };
-  content: table_cell_content;
+  content: TableCellContentType;
 };
 
-type table_node = {
+type TableNodeType = {
   type: "table";
-  marks?: fragment_mark[];
+  marks?: FragmentMarkType[];
   attrs?: {
     displayMode?: "default" | "fixed";
     isNumberColumnEnabled?: boolean;
@@ -685,34 +694,34 @@ type table_node = {
     localId?: string;
     width?: number;
   };
-  content: table_row_node[];
+  content: TableRowNodeType[];
 };
 
-type table_row_node = {
+type TableRowNodeType = {
   type: "tableRow";
   attrs?: { localId?: string };
-  content: (table_cell_node | table_header_node)[];
+  content: (TableCellNodeType | TableHeaderNodeType)[];
 };
 
-type taskItem_node = {
+type TaskItemNodeType = {
   type: "taskItem";
   attrs: { localId: string; state: "TODO" | "DONE" };
-  content?: inline_node[];
+  content?: InlineNodeType[];
 };
 
-type taskList_node = {
+type TaskListNodeType = {
   type: "taskList";
   attrs: { localId: string };
-  content: [taskItem_node, taskItem_node | taskList_node][];
+  content: [TaskItemNodeType, TaskItemNodeType | TaskListNodeType][];
 };
 
-type text_node = { type: "text"; marks?: unknown[]; text: string };
+type TextNodeType = { type: "text"; marks?: unknown[]; text: string };
 
-type text_with_no_marks_node = text_node & {
+type TextWithNoMarksNodeType = TextNodeType & {
   marks?: unknown[];
   [key: string]: unknown;
 };
 
-type textColor_mark = { type: "textColor"; attrs: { color: string } };
+type TextColorMarkType = { type: "textColor"; attrs: { color: string } };
 
-type underline_mark = { type: "underline" };
+type UnderlineMarkType = { type: "underline" };

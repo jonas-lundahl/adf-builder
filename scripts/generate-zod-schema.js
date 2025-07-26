@@ -1,5 +1,7 @@
+import { schemaName } from "./variable-name.js";
+
 export function parseSchema(schema = {}, name = "Root") {
-  return `const ${name} = z.lazy( ()=>${parseNode(schema)});`;
+  return `const ${schemaName(name)} = z.lazy( () => ${parseNode(schema)});`;
 }
 
 function parseNode(schema = {}) {
@@ -91,7 +93,7 @@ function parseRef(schema = {}) {
     return "";
   }
 
-  return schema.$ref.replace("#/definitions/", "");
+  return schemaName(schema.$ref.replace("#/definitions/", ""));
 }
 
 function parseAnyOf(schema = {}) {

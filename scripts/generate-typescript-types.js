@@ -1,5 +1,7 @@
+import { typeName } from "./variable-name.js";
+
 export function generateTypes(schema = {}, name = "Root") {
-  return `type ${name} = ${parseNode(schema)};`;
+  return `type ${typeName(name)} = ${parseNode(schema)};`;
 }
 
 function parseNode(schema = {}) {
@@ -69,7 +71,7 @@ function parseAllOf(schema = {}) {
 
 function parseRef(schema = {}) {
   if (!schema.$ref) return "";
-  return schema.$ref.replace("#/definitions/", "");
+  return typeName(schema.$ref.replace("#/definitions/", ""));
 }
 
 function parseTuple(schema = []) {
