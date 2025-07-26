@@ -1,5 +1,5 @@
 import { writeFile } from "fs/promises";
-import { parseSchema } from "./parser.js";
+import { parseSchema } from "./generate-zod-schema.js";
 import prettier from "prettier";
 
 const SCHEMA_URL = "https://go.atlassian.com/adf-json-schema";
@@ -10,12 +10,12 @@ const schema = await fetch(SCHEMA_URL)
 
 await writeFile("./__generated__/schema.json", JSON.stringify(schema, null, 2));
 
-const generate = Object.entries(schema.definitions)
+const parsedSchemas = Object.entries(schema.definitions)
   .map(([name, def]) => parseSchema(def, name))
   .join("\n\n\n\n");
 
-const ts = `import {z} from 'zod';\n\n` + generate;
+const parsedSchemasWithImports = `import {z} from 'zod';\n\n` + parsedSchemas;
 
-const prettyTs = await prettier.format(ts, { parser: "typescript" });
+const prettyParsedSchemasWithImports = await prettier.format(parsedSchemasWithImports, { parser: "typescript" });
 
-await writeFile("./__generated__/schema.ts", prettyTs);
+await writeFile("./__generated__/schema.ts", prettyParsedSchemasWithImports);
