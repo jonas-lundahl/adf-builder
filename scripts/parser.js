@@ -14,7 +14,7 @@ function parseNode(schema = {}) {
     parseString(schema) ||
     parseObject(schema) ||
     parseRef(schema) ||
-    //parseAnyOf(schema) ||
+    parseAnyOf(schema) ||
     `z.unknown()`
   );
 }
