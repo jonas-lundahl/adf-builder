@@ -18,7 +18,8 @@ const parsedSchemas = Object.entries(schema.definitions)
   .join("\n\n\n\n");
 
 const parsedSchemasWithImports =
-  `import {z} from 'zod';\n\nimport * as T from './types'\n\n` + parsedSchemas;
+  `import {z} from 'zod';\n\nimport * as T from './types.js'\n\n` +
+  parsedSchemas;
 
 const prettyParsedSchemasWithImports = await prettier.format(
   parsedSchemasWithImports,

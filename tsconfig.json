@@ -14,5 +14,5 @@
 
     "pretty": true
   },
-  "include": ["index.ts", "__generated__"]
+  "include": ["index.ts", "__generated__/*.ts"]
 }
