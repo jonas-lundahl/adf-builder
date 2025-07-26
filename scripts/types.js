@@ -14,6 +14,8 @@ const types = Object.entries(schema.definitions)
   .map(([name, def]) => parseSchema(def, name))
   .join("\n\n\n\n");
 
-const prettyTypes = await prettier.format(types, { parser: "typescript" });
+const ts = `import {z} from 'zod';\n\n` + types;
 
-await writeFile("./__generated__/types.ts", prettyTypes);
+const prettyTs = await prettier.format(ts, { parser: "typescript" });
+
+await writeFile("./__generated__/types.ts", prettyTs);

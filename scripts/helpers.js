@@ -6,12 +6,12 @@ export function parseSchema(schema = {}, name = "Root") {
   if (schema.type === "object") {
     const properties = Object.entries(schema.properties)
       .map(([field, def]) => {
-        const colon = schema.required?.includes(field) ? ":" : "?:";
-        return `${field}${colon} unknown;`;
+        const isRequired = schema.required?.includes(field);
+        return `${field}: z.unknown()${isRequired ? `,` : `.optional(),`}`;
       })
-      .join("\n");
-    return `type ${name} = {${properties}};`;
+      .join(" ");
+    return `const ${name} = z.object({${properties}});`;
   }
 
-  return `type ${name} = unknown;`;
+  return `const ${name} = z.unknown();`;
 }

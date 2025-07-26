@@ -1,202 +1,301 @@
-type alignment_mark = { type: unknown; attrs: unknown };
+import { z } from "zod";
 
-type annotation_mark = { type: unknown; attrs: unknown };
+const alignment_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type backgroundColor_mark = { type: unknown; attrs: unknown };
+const annotation_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
+
+const backgroundColor_mark = z.object({
+  type: z.unknown(),
+  attrs: z.unknown(),
+});
+
+const block_content = z.unknown();
 
-type block_content = unknown;
+const blockCard_node = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type blockCard_node = { type: unknown; attrs: unknown };
+const blockquote_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type blockquote_node = { type: unknown; attrs?: unknown; content: unknown };
+const bodiedExtension_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown(),
+  content: z.unknown(),
+});
 
-type bodiedExtension_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs: unknown;
-  content: unknown;
-};
+const bodiedExtension_with_marks_node = z.unknown();
+
+const border_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type bodiedExtension_with_marks_node = unknown;
+const breakout_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type border_mark = { type: unknown; attrs: unknown };
+const bulletList_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type breakout_mark = { type: unknown; attrs: unknown };
+const caption_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+  content: z.unknown().optional(),
+});
 
-type bulletList_node = { type: unknown; attrs?: unknown; content: unknown };
+const code_inline_node = z.unknown();
 
-type caption_node = { type: unknown; attrs?: unknown; content?: unknown };
+const code_mark = z.object({ type: z.unknown() });
 
-type code_inline_node = unknown;
+const codeBlock_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown().optional(),
+  content: z.unknown().optional(),
+});
 
-type code_mark = { type: unknown };
+const codeBlock_root_only_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown().optional(),
+  content: z.unknown().optional(),
+});
 
-type codeBlock_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs?: unknown;
-  content?: unknown;
-};
+const dataConsumer_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type codeBlock_root_only_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs?: unknown;
-  content?: unknown;
-};
+const date_node = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type dataConsumer_mark = { type: unknown; attrs: unknown };
+const decisionItem_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown(),
+  content: z.unknown().optional(),
+});
 
-type date_node = { type: unknown; attrs: unknown };
+const decisionList_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown(),
+  content: z.unknown(),
+});
 
-type decisionItem_node = { type: unknown; attrs: unknown; content?: unknown };
+const doc_node = z.object({
+  type: z.unknown(),
+  content: z.unknown(),
+  version: z.unknown(),
+});
 
-type decisionList_node = { type: unknown; attrs: unknown; content: unknown };
+const em_mark = z.object({ type: z.unknown() });
 
-type doc_node = { type: unknown; content: unknown; version: unknown };
+const embedCard_node = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type em_mark = { type: unknown };
+const emoji_node = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type embedCard_node = { type: unknown; attrs: unknown };
+const expand_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type emoji_node = { type: unknown; attrs: unknown };
+const expand_root_only_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type expand_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs?: unknown;
-  content: unknown;
-};
+const extension_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown(),
+});
 
-type expand_root_only_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs?: unknown;
-  content: unknown;
-};
+const extension_with_marks_node = z.unknown();
 
-type extension_node = { type: unknown; marks?: unknown; attrs: unknown };
+const formatted_text_inline_node = z.unknown();
 
-type extension_with_marks_node = unknown;
+const fragment_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type formatted_text_inline_node = unknown;
+const hardBreak_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+});
 
-type fragment_mark = { type: unknown; attrs: unknown };
+const heading_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown(),
+  content: z.unknown().optional(),
+});
 
-type hardBreak_node = { type: unknown; attrs?: unknown };
+const heading_with_alignment_node = z.unknown();
 
-type heading_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs: unknown;
-  content?: unknown;
-};
+const heading_with_indentation_node = z.unknown();
 
-type heading_with_alignment_node = unknown;
+const heading_with_no_marks_node = z.unknown();
 
-type heading_with_indentation_node = unknown;
+const indentation_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type heading_with_no_marks_node = unknown;
+const inline_node = z.unknown();
 
-type indentation_mark = { type: unknown; attrs: unknown };
+const inlineCard_node = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type inline_node = unknown;
+const inlineExtension_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown(),
+});
 
-type inlineCard_node = { type: unknown; attrs: unknown };
+const inlineExtension_with_marks_node = z.unknown();
 
-type inlineExtension_node = { type: unknown; marks?: unknown; attrs: unknown };
+const layoutColumn_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown(),
+  content: z.unknown(),
+});
 
-type inlineExtension_with_marks_node = unknown;
+const layoutSection_full_node = z.unknown();
 
-type layoutColumn_node = { type: unknown; attrs: unknown; content: unknown };
+const layoutSection_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type layoutSection_full_node = unknown;
+const link_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type layoutSection_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs?: unknown;
-  content: unknown;
-};
+const listItem_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type link_mark = { type: unknown; attrs: unknown };
+const media_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown(),
+});
 
-type listItem_node = { type: unknown; attrs?: unknown; content: unknown };
+const mediaGroup_node = z.object({ type: z.unknown(), content: z.unknown() });
 
-type media_node = { type: unknown; marks?: unknown; attrs: unknown };
+const mediaInline_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown(),
+});
 
-type mediaGroup_node = { type: unknown; content: unknown };
+const mediaSingle_caption_node = z.unknown();
 
-type mediaInline_node = { type: unknown; marks?: unknown; attrs: unknown };
+const mediaSingle_full_node = z.unknown();
 
-type mediaSingle_caption_node = unknown;
+const mediaSingle_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown().optional(),
+});
 
-type mediaSingle_full_node = unknown;
+const mention_node = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type mediaSingle_node = { type: unknown; marks?: unknown; attrs?: unknown };
+const nestedExpand_content = z.unknown();
 
-type mention_node = { type: unknown; attrs: unknown };
+const nestedExpand_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown(),
+  content: z.unknown(),
+});
 
-type nestedExpand_content = unknown;
+const nestedExpand_with_no_marks_node = z.unknown();
 
-type nestedExpand_node = { type: unknown; attrs: unknown; content: unknown };
+const non_nestable_block_content = z.unknown();
 
-type nestedExpand_with_no_marks_node = unknown;
+const orderedList_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type non_nestable_block_content = unknown;
+const panel_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown(),
+  content: z.unknown(),
+});
 
-type orderedList_node = { type: unknown; attrs?: unknown; content: unknown };
+const paragraph_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown().optional(),
+  content: z.unknown().optional(),
+});
 
-type panel_node = { type: unknown; attrs: unknown; content: unknown };
+const paragraph_with_alignment_node = z.unknown();
 
-type paragraph_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs?: unknown;
-  content?: unknown;
-};
+const paragraph_with_indentation_node = z.unknown();
 
-type paragraph_with_alignment_node = unknown;
+const paragraph_with_no_marks_node = z.unknown();
 
-type paragraph_with_indentation_node = unknown;
+const placeholder_node = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type paragraph_with_no_marks_node = unknown;
+const rule_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+});
 
-type placeholder_node = { type: unknown; attrs: unknown };
+const status_node = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type rule_node = { type: unknown; attrs?: unknown };
+const strike_mark = z.object({ type: z.unknown() });
 
-type status_node = { type: unknown; attrs: unknown };
+const strong_mark = z.object({ type: z.unknown() });
 
-type strike_mark = { type: unknown };
+const subsup_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type strong_mark = { type: unknown };
+const table_cell_content = z.unknown();
 
-type subsup_mark = { type: unknown; attrs: unknown };
+const table_cell_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type table_cell_content = unknown;
+const table_header_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type table_cell_node = { type: unknown; attrs?: unknown; content: unknown };
+const table_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type table_header_node = { type: unknown; attrs?: unknown; content: unknown };
+const table_row_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown().optional(),
+  content: z.unknown(),
+});
 
-type table_node = {
-  type: unknown;
-  marks?: unknown;
-  attrs?: unknown;
-  content: unknown;
-};
+const taskItem_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown(),
+  content: z.unknown().optional(),
+});
 
-type table_row_node = { type: unknown; attrs?: unknown; content: unknown };
+const taskList_node = z.object({
+  type: z.unknown(),
+  attrs: z.unknown(),
+  content: z.unknown(),
+});
 
-type taskItem_node = { type: unknown; attrs: unknown; content?: unknown };
+const text_node = z.object({
+  type: z.unknown(),
+  marks: z.unknown().optional(),
+  text: z.unknown(),
+});
 
-type taskList_node = { type: unknown; attrs: unknown; content: unknown };
+const text_with_no_marks_node = z.unknown();
 
-type text_node = { type: unknown; marks?: unknown; text: unknown };
+const textColor_mark = z.object({ type: z.unknown(), attrs: z.unknown() });
 
-type text_with_no_marks_node = unknown;
-
-type textColor_mark = { type: unknown; attrs: unknown };
-
-type underline_mark = { type: unknown };
+const underline_mark = z.object({ type: z.unknown() });

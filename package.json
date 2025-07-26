@@ -7,12 +7,21 @@
   "scripts": {
     "generate:types": "node scripts/types.js"
   },
-  "keywords": ["atlassian", "document", "format", "adf", "confluence"],
+  "keywords": [
+    "atlassian",
+    "document",
+    "format",
+    "adf",
+    "confluence"
+  ],
   "author": "Jonas Lundahl",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
     "prettier": "^3.6.2",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "zod": "^4.0.10"
   }
 }
