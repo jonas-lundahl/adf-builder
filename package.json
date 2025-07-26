@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "generate:types": "node scripts/types.js"
+    "generate": "node scripts/generate.js"
   },
   "keywords": [
     "atlassian",
