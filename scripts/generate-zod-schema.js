@@ -101,6 +101,10 @@ function parseAnyOf(schema = {}) {
     return "";
   }
 
+  if (schema.anyOf.length === 1) {
+    return parseNode(schema.anyOf[0]); // simplify if only one member
+  }
+
   return `z.union([${schema.anyOf.map((node) => parseNode(node)).join(",")}])`;
 }
 
@@ -109,12 +113,20 @@ function parseAllOf(schema = {}) {
     return "";
   }
 
+  if (schema.allOf.length === 1) {
+    return parseNode(schema.allOf[0]); // simplify if only one member
+  }
+
   return `z.intersection(${schema.allOf.map((node) => parseNode(node)).join(",")})`;
 }
 
 function parseEnum(schema = {}) {
   if (!schema.enum) {
     return "";
+  }
+
+  if (schema.enum.length === 1) {
+    return `z.literal(${JSON.stringify(schema.enum[0])})`; // simplify if only one member
   }
 
   return `z.union([${schema.enum.map((element) => `z.literal(${JSON.stringify(element)})`).join(",")}])`;
@@ -145,6 +157,10 @@ function parseString(schema = {}) {
 function parseTuple(schema = []) {
   if (!Array.isArray(schema)) {
     return "";
+  }
+
+  if (schema.length === 1) {
+    return parseNode(schema[0]); // simplify if only one member
   }
 
   return `z.tuple([${schema.map((node) => parseNode(node)).join(",")}])`;
