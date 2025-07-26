@@ -1,5 +1,5 @@
 import { writeFile } from "fs/promises";
-import { parseSchema } from "./helpers.js";
+import { parseSchema } from "./parser.js";
 import prettier from "prettier";
 
 const SCHEMA_URL = "https://go.atlassian.com/adf-json-schema";

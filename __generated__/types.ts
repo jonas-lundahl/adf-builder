@@ -36,7 +36,7 @@ const bodiedExtension_node = z.object({
     layout: z.unknown().optional(),
     localId: z.string().min(1).optional(),
   }),
-  content: z.array(z.unknown()).min(1),
+  content: z.array(non_nestable_block_content).min(1),
 });
 
 const bodiedExtension_with_marks_node = z.unknown();
@@ -57,7 +57,7 @@ const breakout_mark = z.object({
 const bulletList_node = z.object({
   type: z.unknown(),
   attrs: z.object({ localId: z.string().optional() }).optional(),
-  content: z.array(z.unknown()).min(1),
+  content: z.array(listItem_node).min(1),
 });
 
 const caption_node = z.object({
@@ -80,12 +80,12 @@ const codeBlock_node = z.object({
       localId: z.string().optional(),
     })
     .optional(),
-  content: z.array(z.unknown()).optional(),
+  content: z.array(text_with_no_marks_node).optional(),
 });
 
 const codeBlock_root_only_node = z.object({
   type: z.unknown(),
-  marks: z.array(z.unknown()).optional(),
+  marks: z.array(breakout_mark).optional(),
   attrs: z
     .object({
       language: z.string().optional(),
@@ -93,7 +93,7 @@ const codeBlock_root_only_node = z.object({
       localId: z.string().optional(),
     })
     .optional(),
-  content: z.array(z.unknown()).optional(),
+  content: z.array(text_with_no_marks_node).optional(),
 });
 
 const dataConsumer_mark = z.object({
@@ -112,13 +112,13 @@ const date_node = z.object({
 const decisionItem_node = z.object({
   type: z.unknown(),
   attrs: z.object({ localId: z.string(), state: z.string() }),
-  content: z.array(z.unknown()).optional(),
+  content: z.array(inline_node).optional(),
 });
 
 const decisionList_node = z.object({
   type: z.unknown(),
   attrs: z.object({ localId: z.string() }),
-  content: z.array(z.unknown()).min(1),
+  content: z.array(decisionItem_node).min(1),
 });
 
 const doc_node = z.object({
@@ -162,7 +162,7 @@ const expand_node = z.object({
 
 const expand_root_only_node = z.object({
   type: z.unknown(),
-  marks: z.array(z.unknown()).optional(),
+  marks: z.array(breakout_mark).optional(),
   attrs: z
     .object({ title: z.string().optional(), localId: z.string().optional() })
     .optional(),
@@ -205,7 +205,7 @@ const heading_node = z.object({
     level: z.number().min(1).max(6),
     localId: z.string().optional(),
   }),
-  content: z.array(z.unknown()).optional(),
+  content: z.array(inline_node).optional(),
 });
 
 const heading_with_alignment_node = z.unknown();
@@ -243,16 +243,16 @@ const layoutColumn_node = z.object({
     width: z.number().max(100),
     localId: z.string().optional(),
   }),
-  content: z.array(z.unknown()).min(1),
+  content: z.array(block_content).min(1),
 });
 
 const layoutSection_full_node = z.unknown();
 
 const layoutSection_node = z.object({
   type: z.unknown(),
-  marks: z.array(z.unknown()).optional(),
+  marks: z.array(breakout_mark).optional(),
   attrs: z.object({ localId: z.string().optional() }).optional(),
-  content: z.array(z.unknown()),
+  content: z.array(layoutColumn_node),
 });
 
 const link_mark = z.object({
@@ -280,7 +280,7 @@ const media_node = z.object({
 
 const mediaGroup_node = z.object({
   type: z.unknown(),
-  content: z.array(z.unknown()).min(1),
+  content: z.array(media_node).min(1),
 });
 
 const mediaInline_node = z.object({
@@ -305,7 +305,7 @@ const mediaSingle_full_node = z.unknown();
 
 const mediaSingle_node = z.object({
   type: z.unknown(),
-  marks: z.array(z.unknown()).optional(),
+  marks: z.array(link_mark).optional(),
   attrs: z.unknown().optional(),
 });
 
@@ -328,7 +328,7 @@ const nestedExpand_node = z.object({
     title: z.string().optional(),
     localId: z.string().optional(),
   }),
-  content: z.unknown(),
+  content: nestedExpand_content,
 });
 
 const nestedExpand_with_no_marks_node = z.unknown();
@@ -340,7 +340,7 @@ const orderedList_node = z.object({
   attrs: z
     .object({ order: z.number().optional(), localId: z.string().optional() })
     .optional(),
-  content: z.array(z.unknown()).min(1),
+  content: z.array(listItem_node).min(1),
 });
 
 const panel_node = z.object({
@@ -360,7 +360,7 @@ const paragraph_node = z.object({
   type: z.unknown(),
   marks: z.array(z.unknown()).optional(),
   attrs: z.object({ localId: z.string().optional() }).optional(),
-  content: z.array(z.unknown()).optional(),
+  content: z.array(inline_node).optional(),
 });
 
 const paragraph_with_alignment_node = z.unknown();
@@ -411,7 +411,7 @@ const table_cell_node = z.object({
       localId: z.string().optional(),
     })
     .optional(),
-  content: z.unknown(),
+  content: table_cell_content,
 });
 
 const table_header_node = z.object({
@@ -425,12 +425,12 @@ const table_header_node = z.object({
       localId: z.string().optional(),
     })
     .optional(),
-  content: z.unknown(),
+  content: table_cell_content,
 });
 
 const table_node = z.object({
   type: z.unknown(),
-  marks: z.array(z.unknown()).optional(),
+  marks: z.array(fragment_mark).optional(),
   attrs: z
     .object({
       displayMode: z.unknown().optional(),
@@ -440,7 +440,7 @@ const table_node = z.object({
       width: z.number().optional(),
     })
     .optional(),
-  content: z.array(z.unknown()).min(1),
+  content: z.array(table_row_node).min(1),
 });
 
 const table_row_node = z.object({
@@ -452,7 +452,7 @@ const table_row_node = z.object({
 const taskItem_node = z.object({
   type: z.unknown(),
   attrs: z.object({ localId: z.string(), state: z.unknown() }),
-  content: z.array(z.unknown()).optional(),
+  content: z.array(inline_node).optional(),
 });
 
 const taskList_node = z.object({

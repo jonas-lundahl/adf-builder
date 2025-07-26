@@ -13,6 +13,7 @@ function parseNode(schema = {}) {
     parseNumber(schema) ||
     parseString(schema) ||
     parseObject(schema) ||
+    parseRef(schema) ||
     `z.unknown()`
   );
 }
@@ -76,6 +77,14 @@ function parseNumber(schema = {}) {
   }
 
   return str;
+}
+
+function parseRef(schema = {}) {
+  if (!schema.$ref) {
+    return "";
+  }
+
+  return schema.$ref.replace("#/definitions/", "");
 }
 
 function parseString(schema = {}) {
