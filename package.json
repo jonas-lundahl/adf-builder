@@ -1,6 +1,5 @@
 {
   "name": "@jonas-lundahl/adf-builder",
-  "private": "false",
   "version": "1.0.0",
   "description": "Build and validate Atlassian documents using Zod schemas",
   "main": "dist/index.js",
