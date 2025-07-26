@@ -636,27 +636,25 @@ export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
     attrs: z.strictObject({ localId: z.string().optional() }).optional(),
     content: z
       .array(
-        z.lazy(() =>
-          z.tuple([
-            z.union([
-              ParagraphWithNoMarksNodeSchema,
-              MediaSingleCaptionNodeSchema,
-              MediaSingleFullNodeSchema,
-              CodeBlockNodeSchema,
-              ExtensionWithMarksNodeSchema,
-            ]),
-            z.union([
-              ParagraphWithNoMarksNodeSchema,
-              BulletListNodeSchema,
-              OrderedListNodeSchema,
-              TaskListNodeSchema,
-              MediaSingleCaptionNodeSchema,
-              MediaSingleFullNodeSchema,
-              CodeBlockNodeSchema,
-              ExtensionWithMarksNodeSchema,
-            ]),
+        z.tuple([
+          z.union([
+            ParagraphWithNoMarksNodeSchema,
+            MediaSingleCaptionNodeSchema,
+            MediaSingleFullNodeSchema,
+            CodeBlockNodeSchema,
+            ExtensionWithMarksNodeSchema,
           ]),
-        ),
+          z.union([
+            ParagraphWithNoMarksNodeSchema,
+            BulletListNodeSchema,
+            OrderedListNodeSchema,
+            TaskListNodeSchema,
+            MediaSingleCaptionNodeSchema,
+            MediaSingleFullNodeSchema,
+            CodeBlockNodeSchema,
+            ExtensionWithMarksNodeSchema,
+          ]),
+        ]),
       )
       .min(1),
   }),
@@ -730,7 +728,7 @@ export const MediaSingleCaptionNodeSchema: z.ZodType<T.MediaSingleCaptionNodeTyp
       MediaSingleNodeSchema,
       z.object({
         content: z
-          .array(z.lazy(() => z.tuple([MediaNodeSchema, CaptionNodeSchema])))
+          .array(z.tuple([MediaNodeSchema, CaptionNodeSchema]))
           .min(1)
           .max(2),
       }),
@@ -1125,12 +1123,10 @@ export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
     attrs: z.strictObject({ localId: z.string() }),
     content: z
       .array(
-        z.lazy(() =>
-          z.tuple([
-            TaskItemNodeSchema,
-            z.union([TaskItemNodeSchema, TaskListNodeSchema]),
-          ]),
-        ),
+        z.tuple([
+          TaskItemNodeSchema,
+          z.union([TaskItemNodeSchema, TaskListNodeSchema]),
+        ]),
       )
       .min(1),
   }),

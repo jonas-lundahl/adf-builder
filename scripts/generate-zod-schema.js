@@ -147,5 +147,5 @@ function parseTuple(schema = []) {
     return "";
   }
 
-  return `z.lazy(() => z.tuple([${schema.map((node) => parseNode(node)).join(",")}]))`;
+  return `z.tuple([${schema.map((node) => parseNode(node)).join(",")}])`;
 }
