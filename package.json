@@ -43,5 +43,10 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonas-lundahl/adf-builder.git"
+  }
+
 }
