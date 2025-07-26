@@ -1,19 +1,27 @@
 import { z } from "zod";
 
 const alignment_mark = z.lazy(() =>
-  z.object({ type: z.unknown(), attrs: z.object({ align: z.unknown() }) }),
+  z.object({
+    type: z.union([z.literal("alignment")]),
+    attrs: z.object({
+      align: z.union([z.literal("center"), z.literal("end")]),
+    }),
+  }),
 );
 
 const annotation_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
-    attrs: z.object({ id: z.string(), annotationType: z.unknown() }),
+    type: z.union([z.literal("annotation")]),
+    attrs: z.object({
+      id: z.string(),
+      annotationType: z.union([z.literal("inlineComment")]),
+    }),
   }),
 );
 
 const backgroundColor_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("backgroundColor")]),
     attrs: z.object({ color: z.string().regex(/^#[0-9a-fA-F]{6}$/) }),
   }),
 );
@@ -48,7 +56,7 @@ const block_content = z.lazy(() =>
 
 const blockCard_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("blockCard")]),
     attrs: z.union([
       z.object({
         localId: z.string().optional(),
@@ -66,7 +74,17 @@ const blockCard_node = z.lazy(() =>
             .min(1),
         }),
         width: z.number().optional(),
-        layout: z.unknown().optional(),
+        layout: z
+          .union([
+            z.literal("wide"),
+            z.literal("full-width"),
+            z.literal("center"),
+            z.literal("wrap-right"),
+            z.literal("wrap-left"),
+            z.literal("align-end"),
+            z.literal("align-start"),
+          ])
+          .optional(),
       }),
       z.object({ url: z.string(), localId: z.string().optional() }),
       z.object({ data: z.unknown(), localId: z.string().optional() }),
@@ -76,7 +94,7 @@ const blockCard_node = z.lazy(() =>
 
 const blockquote_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("blockquote")]),
     attrs: z.object({ localId: z.string().optional() }).optional(),
     content: z
       .array(
@@ -97,14 +115,20 @@ const blockquote_node = z.lazy(() =>
 
 const bodiedExtension_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("bodiedExtension")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z.object({
       extensionKey: z.string().min(1),
       extensionType: z.string().min(1),
       parameters: z.unknown().optional(),
       text: z.string().optional(),
-      layout: z.unknown().optional(),
+      layout: z
+        .union([
+          z.literal("wide"),
+          z.literal("full-width"),
+          z.literal("default"),
+        ])
+        .optional(),
       localId: z.string().min(1).optional(),
     }),
     content: z.array(non_nestable_block_content).min(1),
@@ -122,7 +146,7 @@ const bodiedExtension_with_marks_node = z.lazy(() =>
 
 const border_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("border")]),
     attrs: z.object({
       size: z.number().min(1).max(3),
       color: z.string().regex(/^#[0-9a-fA-F]{8}$|^#[0-9a-fA-F]{6}$/),
@@ -132,14 +156,17 @@ const border_mark = z.lazy(() =>
 
 const breakout_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
-    attrs: z.object({ mode: z.unknown(), width: z.number().optional() }),
+    type: z.union([z.literal("breakout")]),
+    attrs: z.object({
+      mode: z.union([z.literal("wide"), z.literal("full-width")]),
+      width: z.number().optional(),
+    }),
   }),
 );
 
 const bulletList_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("bulletList")]),
     attrs: z.object({ localId: z.string().optional() }).optional(),
     content: z.array(listItem_node).min(1),
   }),
@@ -147,7 +174,7 @@ const bulletList_node = z.lazy(() =>
 
 const caption_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("caption")]),
     attrs: z.object({ localId: z.string().optional() }).optional(),
     content: z
       .array(
@@ -178,11 +205,13 @@ const code_inline_node = z.lazy(() =>
   ),
 );
 
-const code_mark = z.lazy(() => z.object({ type: z.unknown() }));
+const code_mark = z.lazy(() =>
+  z.object({ type: z.union([z.literal("code")]) }),
+);
 
 const codeBlock_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("codeBlock")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z
       .object({
@@ -197,7 +226,7 @@ const codeBlock_node = z.lazy(() =>
 
 const codeBlock_root_only_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("codeBlock")]),
     marks: z.array(breakout_mark).optional(),
     attrs: z
       .object({
@@ -212,14 +241,14 @@ const codeBlock_root_only_node = z.lazy(() =>
 
 const dataConsumer_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("dataConsumer")]),
     attrs: z.object({ sources: z.array(z.string()).min(1) }),
   }),
 );
 
 const date_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("date")]),
     attrs: z.object({
       timestamp: z.string().min(1),
       localId: z.string().optional(),
@@ -229,7 +258,7 @@ const date_node = z.lazy(() =>
 
 const decisionItem_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("decisionItem")]),
     attrs: z.object({ localId: z.string(), state: z.string() }),
     content: z.array(inline_node).optional(),
   }),
@@ -237,7 +266,7 @@ const decisionItem_node = z.lazy(() =>
 
 const decisionList_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("decisionList")]),
     attrs: z.object({ localId: z.string() }),
     content: z.array(decisionItem_node).min(1),
   }),
@@ -245,7 +274,7 @@ const decisionList_node = z.lazy(() =>
 
 const doc_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("doc")]),
     content: z.array(
       z.union([
         blockCard_node,
@@ -276,18 +305,26 @@ const doc_node = z.lazy(() =>
         expand_root_only_node,
       ]),
     ),
-    version: z.unknown(),
+    version: z.union([z.literal(1)]),
   }),
 );
 
-const em_mark = z.lazy(() => z.object({ type: z.unknown() }));
+const em_mark = z.lazy(() => z.object({ type: z.union([z.literal("em")]) }));
 
 const embedCard_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("embedCard")]),
     attrs: z.object({
       url: z.string(),
-      layout: z.unknown(),
+      layout: z.union([
+        z.literal("wide"),
+        z.literal("full-width"),
+        z.literal("center"),
+        z.literal("wrap-right"),
+        z.literal("wrap-left"),
+        z.literal("align-end"),
+        z.literal("align-start"),
+      ]),
       width: z.number().max(100).optional(),
       originalHeight: z.number().optional(),
       originalWidth: z.number().optional(),
@@ -298,7 +335,7 @@ const embedCard_node = z.lazy(() =>
 
 const emoji_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("emoji")]),
     attrs: z.object({
       shortName: z.string(),
       id: z.string().optional(),
@@ -310,7 +347,7 @@ const emoji_node = z.lazy(() =>
 
 const expand_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("expand")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z
       .object({ title: z.string().optional(), localId: z.string().optional() })
@@ -325,7 +362,7 @@ const expand_node = z.lazy(() =>
 
 const expand_root_only_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("expand")]),
     marks: z.array(breakout_mark).optional(),
     attrs: z
       .object({ title: z.string().optional(), localId: z.string().optional() })
@@ -340,14 +377,20 @@ const expand_root_only_node = z.lazy(() =>
 
 const extension_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("extension")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z.object({
       extensionKey: z.string().min(1),
       extensionType: z.string().min(1),
       parameters: z.unknown().optional(),
       text: z.string().optional(),
-      layout: z.unknown().optional(),
+      layout: z
+        .union([
+          z.literal("wide"),
+          z.literal("full-width"),
+          z.literal("default"),
+        ])
+        .optional(),
       localId: z.string().min(1).optional(),
     }),
   }),
@@ -387,7 +430,7 @@ const formatted_text_inline_node = z.lazy(() =>
 
 const fragment_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("fragment")]),
     attrs: z.object({
       localId: z.string().min(1),
       name: z.string().optional(),
@@ -397,16 +440,19 @@ const fragment_mark = z.lazy(() =>
 
 const hardBreak_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("hardBreak")]),
     attrs: z
-      .object({ text: z.unknown().optional(), localId: z.string().optional() })
+      .object({
+        text: z.union([z.literal("\n")]).optional(),
+        localId: z.string().optional(),
+      })
       .optional(),
   }),
 );
 
 const heading_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("heading")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z.object({
       level: z.number().min(1).max(6),
@@ -439,7 +485,7 @@ const heading_with_no_marks_node = z.lazy(() =>
 
 const indentation_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("indentation")]),
     attrs: z.object({ level: z.number().min(1).max(6) }),
   }),
 );
@@ -462,7 +508,7 @@ const inline_node = z.lazy(() =>
 
 const inlineCard_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("inlineCard")]),
     attrs: z.union([
       z.object({ url: z.string(), localId: z.string().optional() }),
       z.object({ data: z.unknown(), localId: z.string().optional() }),
@@ -472,7 +518,7 @@ const inlineCard_node = z.lazy(() =>
 
 const inlineExtension_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("inlineExtension")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z.object({
       extensionKey: z.string().min(1),
@@ -495,7 +541,7 @@ const inlineExtension_with_marks_node = z.lazy(() =>
 
 const layoutColumn_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("layoutColumn")]),
     attrs: z.object({
       width: z.number().max(100),
       localId: z.string().optional(),
@@ -516,7 +562,7 @@ const layoutSection_full_node = z.lazy(() =>
 
 const layoutSection_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("layoutSection")]),
     marks: z.array(breakout_mark).optional(),
     attrs: z.object({ localId: z.string().optional() }).optional(),
     content: z.array(layoutColumn_node),
@@ -525,7 +571,7 @@ const layoutSection_node = z.lazy(() =>
 
 const link_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("link")]),
     attrs: z.object({
       href: z.string(),
       title: z.string().optional(),
@@ -538,7 +584,7 @@ const link_mark = z.lazy(() =>
 
 const listItem_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("listItem")]),
     attrs: z.object({ localId: z.string().optional() }).optional(),
     content: z.array(z.unknown()).min(1),
   }),
@@ -546,13 +592,13 @@ const listItem_node = z.lazy(() =>
 
 const media_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("media")]),
     marks: z
       .array(z.union([link_mark, annotation_mark, border_mark]))
       .optional(),
     attrs: z.union([
       z.object({
-        type: z.unknown(),
+        type: z.union([z.literal("link"), z.literal("file")]),
         localId: z.string().optional(),
         id: z.string().min(1),
         alt: z.string().optional(),
@@ -562,7 +608,7 @@ const media_node = z.lazy(() =>
         width: z.number().optional(),
       }),
       z.object({
-        type: z.unknown(),
+        type: z.union([z.literal("external")]),
         localId: z.string().optional(),
         alt: z.string().optional(),
         height: z.number().optional(),
@@ -574,17 +620,22 @@ const media_node = z.lazy(() =>
 );
 
 const mediaGroup_node = z.lazy(() =>
-  z.object({ type: z.unknown(), content: z.array(media_node).min(1) }),
+  z.object({
+    type: z.union([z.literal("mediaGroup")]),
+    content: z.array(media_node).min(1),
+  }),
 );
 
 const mediaInline_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("mediaInline")]),
     marks: z
       .array(z.union([link_mark, annotation_mark, border_mark]))
       .optional(),
     attrs: z.object({
-      type: z.unknown().optional(),
+      type: z
+        .union([z.literal("link"), z.literal("file"), z.literal("image")])
+        .optional(),
       localId: z.string().optional(),
       id: z.string().min(1),
       alt: z.string().optional(),
@@ -613,21 +664,37 @@ const mediaSingle_full_node = z.lazy(() =>
 
 const mediaSingle_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("mediaSingle")]),
     marks: z.array(link_mark).optional(),
     attrs: z
       .union([
         z.object({
           localId: z.string().optional(),
           width: z.number().max(100).optional(),
-          layout: z.unknown(),
-          widthType: z.unknown().optional(),
+          layout: z.union([
+            z.literal("wide"),
+            z.literal("full-width"),
+            z.literal("center"),
+            z.literal("wrap-right"),
+            z.literal("wrap-left"),
+            z.literal("align-end"),
+            z.literal("align-start"),
+          ]),
+          widthType: z.union([z.literal("percentage")]).optional(),
         }),
         z.object({
           localId: z.string().optional(),
           width: z.number(),
-          widthType: z.unknown(),
-          layout: z.unknown(),
+          widthType: z.union([z.literal("pixel")]),
+          layout: z.union([
+            z.literal("wide"),
+            z.literal("full-width"),
+            z.literal("center"),
+            z.literal("wrap-right"),
+            z.literal("wrap-left"),
+            z.literal("align-end"),
+            z.literal("align-start"),
+          ]),
         }),
       ])
       .optional(),
@@ -636,13 +703,15 @@ const mediaSingle_node = z.lazy(() =>
 
 const mention_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("mention")]),
     attrs: z.object({
       id: z.string(),
       localId: z.string().optional(),
       text: z.string().optional(),
       accessLevel: z.string().optional(),
-      userType: z.unknown().optional(),
+      userType: z
+        .union([z.literal("DEFAULT"), z.literal("SPECIAL"), z.literal("APP")])
+        .optional(),
     }),
   }),
 );
@@ -672,7 +741,7 @@ const nestedExpand_content = z.lazy(() =>
 
 const nestedExpand_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("nestedExpand")]),
     attrs: z.object({
       title: z.string().optional(),
       localId: z.string().optional(),
@@ -712,7 +781,7 @@ const non_nestable_block_content = z.lazy(() =>
 
 const orderedList_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("orderedList")]),
     attrs: z
       .object({ order: z.number().optional(), localId: z.string().optional() })
       .optional(),
@@ -722,9 +791,17 @@ const orderedList_node = z.lazy(() =>
 
 const panel_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("panel")]),
     attrs: z.object({
-      panelType: z.unknown(),
+      panelType: z.union([
+        z.literal("info"),
+        z.literal("note"),
+        z.literal("tip"),
+        z.literal("warning"),
+        z.literal("error"),
+        z.literal("success"),
+        z.literal("custom"),
+      ]),
       panelIcon: z.string().optional(),
       panelIconId: z.string().optional(),
       panelIconText: z.string().optional(),
@@ -755,7 +832,7 @@ const panel_node = z.lazy(() =>
 
 const paragraph_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("paragraph")]),
     marks: z.array(z.unknown()).optional(),
     attrs: z.object({ localId: z.string().optional() }).optional(),
     content: z.array(inline_node).optional(),
@@ -785,36 +862,50 @@ const paragraph_with_no_marks_node = z.lazy(() =>
 
 const placeholder_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("placeholder")]),
     attrs: z.object({ text: z.string(), localId: z.string().optional() }),
   }),
 );
 
 const rule_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("rule")]),
     attrs: z.object({ localId: z.string().optional() }).optional(),
   }),
 );
 
 const status_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("status")]),
     attrs: z.object({
       text: z.string().min(1),
-      color: z.unknown(),
+      color: z.union([
+        z.literal("neutral"),
+        z.literal("purple"),
+        z.literal("blue"),
+        z.literal("red"),
+        z.literal("yellow"),
+        z.literal("green"),
+      ]),
       localId: z.string().optional(),
       style: z.string().optional(),
     }),
   }),
 );
 
-const strike_mark = z.lazy(() => z.object({ type: z.unknown() }));
+const strike_mark = z.lazy(() =>
+  z.object({ type: z.union([z.literal("strike")]) }),
+);
 
-const strong_mark = z.lazy(() => z.object({ type: z.unknown() }));
+const strong_mark = z.lazy(() =>
+  z.object({ type: z.union([z.literal("strong")]) }),
+);
 
 const subsup_mark = z.lazy(() =>
-  z.object({ type: z.unknown(), attrs: z.object({ type: z.unknown() }) }),
+  z.object({
+    type: z.union([z.literal("subsup")]),
+    attrs: z.object({ type: z.union([z.literal("sub"), z.literal("sup")]) }),
+  }),
 );
 
 const table_cell_content = z.lazy(() =>
@@ -848,7 +939,7 @@ const table_cell_content = z.lazy(() =>
 
 const table_cell_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("tableCell")]),
     attrs: z
       .object({
         colspan: z.number().optional(),
@@ -864,7 +955,7 @@ const table_cell_node = z.lazy(() =>
 
 const table_header_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("tableHeader")]),
     attrs: z
       .object({
         colspan: z.number().optional(),
@@ -880,13 +971,24 @@ const table_header_node = z.lazy(() =>
 
 const table_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("table")]),
     marks: z.array(fragment_mark).optional(),
     attrs: z
       .object({
-        displayMode: z.unknown().optional(),
+        displayMode: z
+          .union([z.literal("default"), z.literal("fixed")])
+          .optional(),
         isNumberColumnEnabled: z.boolean().optional(),
-        layout: z.unknown().optional(),
+        layout: z
+          .union([
+            z.literal("wide"),
+            z.literal("full-width"),
+            z.literal("center"),
+            z.literal("align-end"),
+            z.literal("align-start"),
+            z.literal("default"),
+          ])
+          .optional(),
         localId: z.string().min(1).optional(),
         width: z.number().optional(),
       })
@@ -897,7 +999,7 @@ const table_node = z.lazy(() =>
 
 const table_row_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("tableRow")]),
     attrs: z.object({ localId: z.string().optional() }).optional(),
     content: z.array(z.union([table_cell_node, table_header_node])),
   }),
@@ -905,15 +1007,18 @@ const table_row_node = z.lazy(() =>
 
 const taskItem_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
-    attrs: z.object({ localId: z.string(), state: z.unknown() }),
+    type: z.union([z.literal("taskItem")]),
+    attrs: z.object({
+      localId: z.string(),
+      state: z.union([z.literal("TODO"), z.literal("DONE")]),
+    }),
     content: z.array(inline_node).optional(),
   }),
 );
 
 const taskList_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("taskList")]),
     attrs: z.object({ localId: z.string() }),
     content: z.array(z.unknown()).min(1),
   }),
@@ -921,7 +1026,7 @@ const taskList_node = z.lazy(() =>
 
 const text_node = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("text")]),
     marks: z.array(z.unknown()).optional(),
     text: z.string().min(1),
   }),
@@ -936,9 +1041,11 @@ const text_with_no_marks_node = z.lazy(() =>
 
 const textColor_mark = z.lazy(() =>
   z.object({
-    type: z.unknown(),
+    type: z.union([z.literal("textColor")]),
     attrs: z.object({ color: z.string().regex(/^#[0-9a-fA-F]{6}$/) }),
   }),
 );
 
-const underline_mark = z.lazy(() => z.object({ type: z.unknown() }));
+const underline_mark = z.lazy(() =>
+  z.object({ type: z.union([z.literal("underline")]) }),
+);

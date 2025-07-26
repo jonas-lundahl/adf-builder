@@ -12,6 +12,7 @@ function parseNode(schema = {}) {
     parseRef(schema) ||
     parseAnyOf(schema) ||
     parseAllOf(schema) ||
+    parseEnum(schema) ||
     `z.unknown()`
   );
 }
@@ -99,6 +100,14 @@ function parseAllOf(schema = {}) {
   }
 
   return `z.intersection(${schema.allOf.map((node) => parseNode(node)).join(",")})`;
+}
+
+function parseEnum(schema = {}) {
+  if (!schema.enum) {
+    return "";
+  }
+
+  return `z.union([${schema.enum.map((element) => `z.literal(${JSON.stringify(element)})`).join(",")}])`;
 }
 
 function parseString(schema = {}) {
