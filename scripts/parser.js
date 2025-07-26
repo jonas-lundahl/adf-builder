@@ -1,9 +1,5 @@
 export function parseSchema(schema = {}, name = "Root") {
-  if (schema.type === "object") {
-    return `const ${name} = z.lazy( ()=>${parseNode(schema)});`;
-  }
-
-  return `const ${name} = z.unknown();`;
+  return `const ${name} = z.lazy( ()=>${parseNode(schema)});`;
 }
 
 function parseNode(schema = {}) {
@@ -15,6 +11,7 @@ function parseNode(schema = {}) {
     parseObject(schema) ||
     parseRef(schema) ||
     parseAnyOf(schema) ||
+    parseAllOf(schema) ||
     `z.unknown()`
   );
 }
@@ -94,6 +91,14 @@ function parseAnyOf(schema = {}) {
   }
 
   return `z.union([${schema.anyOf.map((node) => parseNode(node)).join(",")}])`;
+}
+
+function parseAllOf(schema = {}) {
+  if (!schema.allOf) {
+    return "";
+  }
+
+  return `z.intersection(${schema.allOf.map((node) => parseNode(node)).join(",")})`;
 }
 
 function parseString(schema = {}) {

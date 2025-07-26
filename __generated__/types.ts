@@ -18,7 +18,33 @@ const backgroundColor_mark = z.lazy(() =>
   }),
 );
 
-const block_content = z.unknown();
+const block_content = z.lazy(() =>
+  z.union([
+    blockCard_node,
+    paragraph_with_no_marks_node,
+    paragraph_with_alignment_node,
+    paragraph_with_indentation_node,
+    mediaSingle_caption_node,
+    mediaSingle_full_node,
+    codeBlock_node,
+    taskList_node,
+    bulletList_node,
+    orderedList_node,
+    heading_with_no_marks_node,
+    heading_with_alignment_node,
+    heading_with_indentation_node,
+    mediaGroup_node,
+    decisionList_node,
+    rule_node,
+    panel_node,
+    blockquote_node,
+    extension_with_marks_node,
+    embedCard_node,
+    table_node,
+    expand_node,
+    bodiedExtension_with_marks_node,
+  ]),
+);
 
 const blockCard_node = z.lazy(() =>
   z.object({
@@ -85,7 +111,14 @@ const bodiedExtension_node = z.lazy(() =>
   }),
 );
 
-const bodiedExtension_with_marks_node = z.unknown();
+const bodiedExtension_with_marks_node = z.lazy(() =>
+  z.intersection(
+    bodiedExtension_node,
+    z.object({
+      marks: z.array(z.union([dataConsumer_mark, fragment_mark])).optional(),
+    }),
+  ),
+);
 
 const border_mark = z.lazy(() =>
   z.object({
@@ -134,7 +167,16 @@ const caption_node = z.lazy(() =>
   }),
 );
 
-const code_inline_node = z.unknown();
+const code_inline_node = z.lazy(() =>
+  z.intersection(
+    text_node,
+    z.object({
+      marks: z
+        .array(z.union([code_mark, link_mark, annotation_mark]))
+        .optional(),
+    }),
+  ),
+);
 
 const code_mark = z.lazy(() => z.object({ type: z.unknown() }));
 
@@ -311,9 +353,37 @@ const extension_node = z.lazy(() =>
   }),
 );
 
-const extension_with_marks_node = z.unknown();
+const extension_with_marks_node = z.lazy(() =>
+  z.intersection(
+    extension_node,
+    z.object({
+      marks: z.array(z.union([dataConsumer_mark, fragment_mark])).optional(),
+    }),
+  ),
+);
 
-const formatted_text_inline_node = z.unknown();
+const formatted_text_inline_node = z.lazy(() =>
+  z.intersection(
+    text_node,
+    z.object({
+      marks: z
+        .array(
+          z.union([
+            link_mark,
+            em_mark,
+            strong_mark,
+            strike_mark,
+            subsup_mark,
+            underline_mark,
+            textColor_mark,
+            annotation_mark,
+            backgroundColor_mark,
+          ]),
+        )
+        .optional(),
+    }),
+  ),
+);
 
 const fragment_mark = z.lazy(() =>
   z.object({
@@ -346,11 +416,26 @@ const heading_node = z.lazy(() =>
   }),
 );
 
-const heading_with_alignment_node = z.unknown();
+const heading_with_alignment_node = z.lazy(() =>
+  z.intersection(
+    heading_node,
+    z.object({ marks: z.array(alignment_mark).optional() }),
+  ),
+);
 
-const heading_with_indentation_node = z.unknown();
+const heading_with_indentation_node = z.lazy(() =>
+  z.intersection(
+    heading_node,
+    z.object({ marks: z.array(indentation_mark).optional() }),
+  ),
+);
 
-const heading_with_no_marks_node = z.unknown();
+const heading_with_no_marks_node = z.lazy(() =>
+  z.intersection(
+    heading_node,
+    z.object({ marks: z.array(z.unknown()).optional() }),
+  ),
+);
 
 const indentation_mark = z.lazy(() =>
   z.object({
@@ -359,7 +444,21 @@ const indentation_mark = z.lazy(() =>
   }),
 );
 
-const inline_node = z.unknown();
+const inline_node = z.lazy(() =>
+  z.union([
+    formatted_text_inline_node,
+    code_inline_node,
+    date_node,
+    emoji_node,
+    hardBreak_node,
+    inlineCard_node,
+    mention_node,
+    placeholder_node,
+    status_node,
+    inlineExtension_with_marks_node,
+    mediaInline_node,
+  ]),
+);
 
 const inlineCard_node = z.lazy(() =>
   z.object({
@@ -385,7 +484,14 @@ const inlineExtension_node = z.lazy(() =>
   }),
 );
 
-const inlineExtension_with_marks_node = z.unknown();
+const inlineExtension_with_marks_node = z.lazy(() =>
+  z.intersection(
+    inlineExtension_node,
+    z.object({
+      marks: z.array(z.union([dataConsumer_mark, fragment_mark])).optional(),
+    }),
+  ),
+);
 
 const layoutColumn_node = z.lazy(() =>
   z.object({
@@ -398,7 +504,15 @@ const layoutColumn_node = z.lazy(() =>
   }),
 );
 
-const layoutSection_full_node = z.unknown();
+const layoutSection_full_node = z.lazy(() =>
+  z.intersection(
+    layoutSection_node,
+    z.object({
+      marks: z.array(breakout_mark).optional(),
+      content: z.array(layoutColumn_node).min(2).max(3),
+    }),
+  ),
+);
 
 const layoutSection_node = z.lazy(() =>
   z.object({
@@ -483,9 +597,19 @@ const mediaInline_node = z.lazy(() =>
   }),
 );
 
-const mediaSingle_caption_node = z.unknown();
+const mediaSingle_caption_node = z.lazy(() =>
+  z.intersection(
+    mediaSingle_node,
+    z.object({ content: z.array(z.unknown()).min(1).max(2) }),
+  ),
+);
 
-const mediaSingle_full_node = z.unknown();
+const mediaSingle_full_node = z.lazy(() =>
+  z.intersection(
+    mediaSingle_node,
+    z.object({ content: z.array(media_node).min(1).max(1) }),
+  ),
+);
 
 const mediaSingle_node = z.lazy(() =>
   z.object({
@@ -523,7 +647,28 @@ const mention_node = z.lazy(() =>
   }),
 );
 
-const nestedExpand_content = z.unknown();
+const nestedExpand_content = z.lazy(() =>
+  z
+    .array(
+      z.union([
+        paragraph_with_no_marks_node,
+        heading_with_no_marks_node,
+        mediaSingle_caption_node,
+        mediaSingle_full_node,
+        mediaGroup_node,
+        codeBlock_node,
+        bulletList_node,
+        orderedList_node,
+        taskList_node,
+        decisionList_node,
+        rule_node,
+        panel_node,
+        blockquote_node,
+        extension_with_marks_node,
+      ]),
+    )
+    .min(1),
+);
 
 const nestedExpand_node = z.lazy(() =>
   z.object({
@@ -536,9 +681,34 @@ const nestedExpand_node = z.lazy(() =>
   }),
 );
 
-const nestedExpand_with_no_marks_node = z.unknown();
+const nestedExpand_with_no_marks_node = z.lazy(() =>
+  z.intersection(
+    nestedExpand_node,
+    z.object({ marks: z.array(z.unknown()).optional() }),
+  ),
+);
 
-const non_nestable_block_content = z.unknown();
+const non_nestable_block_content = z.lazy(() =>
+  z.union([
+    paragraph_with_no_marks_node,
+    panel_node,
+    blockquote_node,
+    orderedList_node,
+    bulletList_node,
+    rule_node,
+    heading_with_no_marks_node,
+    codeBlock_node,
+    mediaGroup_node,
+    mediaSingle_caption_node,
+    mediaSingle_full_node,
+    decisionList_node,
+    taskList_node,
+    table_node,
+    blockCard_node,
+    embedCard_node,
+    extension_with_marks_node,
+  ]),
+);
 
 const orderedList_node = z.lazy(() =>
   z.object({
@@ -592,11 +762,26 @@ const paragraph_node = z.lazy(() =>
   }),
 );
 
-const paragraph_with_alignment_node = z.unknown();
+const paragraph_with_alignment_node = z.lazy(() =>
+  z.intersection(
+    paragraph_node,
+    z.object({ marks: z.array(alignment_mark).optional() }),
+  ),
+);
 
-const paragraph_with_indentation_node = z.unknown();
+const paragraph_with_indentation_node = z.lazy(() =>
+  z.intersection(
+    paragraph_node,
+    z.object({ marks: z.array(indentation_mark).optional() }),
+  ),
+);
 
-const paragraph_with_no_marks_node = z.unknown();
+const paragraph_with_no_marks_node = z.lazy(() =>
+  z.intersection(
+    paragraph_node,
+    z.object({ marks: z.array(z.unknown()).optional() }),
+  ),
+);
 
 const placeholder_node = z.lazy(() =>
   z.object({
@@ -632,7 +817,34 @@ const subsup_mark = z.lazy(() =>
   z.object({ type: z.unknown(), attrs: z.object({ type: z.unknown() }) }),
 );
 
-const table_cell_content = z.unknown();
+const table_cell_content = z.lazy(() =>
+  z
+    .array(
+      z.union([
+        paragraph_with_no_marks_node,
+        paragraph_with_alignment_node,
+        panel_node,
+        blockquote_node,
+        orderedList_node,
+        bulletList_node,
+        rule_node,
+        heading_with_no_marks_node,
+        heading_with_alignment_node,
+        heading_with_indentation_node,
+        codeBlock_node,
+        mediaSingle_caption_node,
+        mediaSingle_full_node,
+        mediaGroup_node,
+        decisionList_node,
+        taskList_node,
+        blockCard_node,
+        embedCard_node,
+        extension_with_marks_node,
+        nestedExpand_with_no_marks_node,
+      ]),
+    )
+    .min(1),
+);
 
 const table_cell_node = z.lazy(() =>
   z.object({
@@ -715,7 +927,12 @@ const text_node = z.lazy(() =>
   }),
 );
 
-const text_with_no_marks_node = z.unknown();
+const text_with_no_marks_node = z.lazy(() =>
+  z.intersection(
+    text_node,
+    z.object({ marks: z.array(z.unknown()).optional() }),
+  ),
+);
 
 const textColor_mark = z.lazy(() =>
   z.object({
