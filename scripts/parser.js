@@ -1,6 +1,6 @@
 export function parseSchema(schema = {}, name = "Root") {
   if (schema.type === "object") {
-    return `const ${name} = ${parseNode(schema)};`;
+    return `const ${name} = z.lazy( ()=>${parseNode(schema)});`;
   }
 
   return `const ${name} = z.unknown();`;
@@ -14,6 +14,7 @@ function parseNode(schema = {}) {
     parseString(schema) ||
     parseObject(schema) ||
     parseRef(schema) ||
+    //parseAnyOf(schema) ||
     `z.unknown()`
   );
 }
@@ -85,6 +86,14 @@ function parseRef(schema = {}) {
   }
 
   return schema.$ref.replace("#/definitions/", "");
+}
+
+function parseAnyOf(schema = {}) {
+  if (!schema.anyOf) {
+    return "";
+  }
+
+  return `z.union([${schema.anyOf.map((node) => parseNode(node)).join(",")}])`;
 }
 
 function parseString(schema = {}) {
