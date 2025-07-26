@@ -1,7 +1,7 @@
 import { typeName } from "./variable-name.js";
 
 export function generateTypes(schema = {}, name = "Root") {
-  return `type ${typeName(name)} = ${parseNode(schema)};`;
+  return `export type ${typeName(name)} = ${parseNode(schema)};`;
 }
 
 function parseNode(schema = {}) {
