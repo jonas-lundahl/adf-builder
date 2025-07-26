@@ -21,9 +21,9 @@ const adfDocument: DocNodeType = {
 
 const parseResult = DocNodeSchema.safeParse(adfDocument);
 
-if (result.success) {
+if (parseResult.success) {
   console.log("Document is valid!");
 } else {
-  console.error("Invalid document:", result.error);
+  console.error("Invalid document:", parseResult.error);
 }
 ```
