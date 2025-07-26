@@ -1,7 +1,7 @@
 import { schemaName, typeName } from "./variable-name.js";
 
 export function parseSchema(schema = {}, name = "Root") {
-  return `const ${schemaName(name)}: z.ZodType<T.${typeName(name)}> = z.lazy( () => ${parseNode(schema)});`;
+  return `export const ${schemaName(name)}: z.ZodType<T.${typeName(name)}> = z.lazy( () => ${parseNode(schema)});`;
 }
 
 function parseNode(schema = {}) {

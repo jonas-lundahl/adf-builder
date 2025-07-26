@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import * as T from "./types";
 
-const AlignmentMarkSchema: z.ZodType<T.AlignmentMarkType> = z.lazy(() =>
+export const AlignmentMarkSchema: z.ZodType<T.AlignmentMarkType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("alignment")]),
     attrs: z.strictObject({
@@ -11,25 +11,26 @@ const AlignmentMarkSchema: z.ZodType<T.AlignmentMarkType> = z.lazy(() =>
   }),
 );
 
-const AnnotationMarkSchema: z.ZodType<T.AnnotationMarkType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("annotation")]),
-    attrs: z.strictObject({
-      id: z.string(),
-      annotationType: z.union([z.literal("inlineComment")]),
+export const AnnotationMarkSchema: z.ZodType<T.AnnotationMarkType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("annotation")]),
+      attrs: z.strictObject({
+        id: z.string(),
+        annotationType: z.union([z.literal("inlineComment")]),
+      }),
     }),
-  }),
 );
 
-const BackgroundColorMarkSchema: z.ZodType<T.BackgroundColorMarkType> = z.lazy(
-  () =>
+export const BackgroundColorMarkSchema: z.ZodType<T.BackgroundColorMarkType> =
+  z.lazy(() =>
     z.strictObject({
       type: z.union([z.literal("backgroundColor")]),
       attrs: z.strictObject({ color: z.string().regex(/^#[0-9a-fA-F]{6}$/) }),
     }),
-);
+  );
 
-const BlockContentSchema: z.ZodType<T.BlockContentType> = z.lazy(() =>
+export const BlockContentSchema: z.ZodType<T.BlockContentType> = z.lazy(() =>
   z.union([
     BlockCardNodeSchema,
     ParagraphWithNoMarksNodeSchema,
@@ -57,7 +58,7 @@ const BlockContentSchema: z.ZodType<T.BlockContentType> = z.lazy(() =>
   ]),
 );
 
-const BlockCardNodeSchema: z.ZodType<T.BlockCardNodeType> = z.lazy(() =>
+export const BlockCardNodeSchema: z.ZodType<T.BlockCardNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("blockCard")]),
     attrs: z.union([
@@ -95,29 +96,30 @@ const BlockCardNodeSchema: z.ZodType<T.BlockCardNodeType> = z.lazy(() =>
   }),
 );
 
-const BlockquoteNodeSchema: z.ZodType<T.BlockquoteNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("blockquote")]),
-    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
-    content: z
-      .array(
-        z.union([
-          ParagraphWithNoMarksNodeSchema,
-          OrderedListNodeSchema,
-          BulletListNodeSchema,
-          CodeBlockNodeSchema,
-          MediaSingleCaptionNodeSchema,
-          MediaSingleFullNodeSchema,
-          MediaGroupNodeSchema,
-          ExtensionWithMarksNodeSchema,
-        ]),
-      )
-      .min(1),
-  }),
+export const BlockquoteNodeSchema: z.ZodType<T.BlockquoteNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("blockquote")]),
+      attrs: z.strictObject({ localId: z.string().optional() }).optional(),
+      content: z
+        .array(
+          z.union([
+            ParagraphWithNoMarksNodeSchema,
+            OrderedListNodeSchema,
+            BulletListNodeSchema,
+            CodeBlockNodeSchema,
+            MediaSingleCaptionNodeSchema,
+            MediaSingleFullNodeSchema,
+            MediaGroupNodeSchema,
+            ExtensionWithMarksNodeSchema,
+          ]),
+        )
+        .min(1),
+    }),
 );
 
-const BodiedExtensionNodeSchema: z.ZodType<T.BodiedExtensionNodeType> = z.lazy(
-  () =>
+export const BodiedExtensionNodeSchema: z.ZodType<T.BodiedExtensionNodeType> =
+  z.lazy(() =>
     z.strictObject({
       type: z.union([z.literal("bodiedExtension")]),
       marks: z.array(z.unknown()).optional(),
@@ -137,9 +139,9 @@ const BodiedExtensionNodeSchema: z.ZodType<T.BodiedExtensionNodeType> = z.lazy(
       }),
       content: z.array(NonNestableBlockContentSchema).min(1),
     }),
-);
+  );
 
-const BodiedExtensionWithMarksNodeSchema: z.ZodType<T.BodiedExtensionWithMarksNodeType> =
+export const BodiedExtensionWithMarksNodeSchema: z.ZodType<T.BodiedExtensionWithMarksNodeType> =
   z.lazy(() =>
     z.intersection(
       BodiedExtensionNodeSchema,
@@ -151,7 +153,7 @@ const BodiedExtensionWithMarksNodeSchema: z.ZodType<T.BodiedExtensionWithMarksNo
     ),
   );
 
-const BorderMarkSchema: z.ZodType<T.BorderMarkType> = z.lazy(() =>
+export const BorderMarkSchema: z.ZodType<T.BorderMarkType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("border")]),
     attrs: z.strictObject({
@@ -161,7 +163,7 @@ const BorderMarkSchema: z.ZodType<T.BorderMarkType> = z.lazy(() =>
   }),
 );
 
-const BreakoutMarkSchema: z.ZodType<T.BreakoutMarkType> = z.lazy(() =>
+export const BreakoutMarkSchema: z.ZodType<T.BreakoutMarkType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("breakout")]),
     attrs: z.strictObject({
@@ -171,15 +173,16 @@ const BreakoutMarkSchema: z.ZodType<T.BreakoutMarkType> = z.lazy(() =>
   }),
 );
 
-const BulletListNodeSchema: z.ZodType<T.BulletListNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("bulletList")]),
-    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
-    content: z.array(ListItemNodeSchema).min(1),
-  }),
+export const BulletListNodeSchema: z.ZodType<T.BulletListNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("bulletList")]),
+      attrs: z.strictObject({ localId: z.string().optional() }).optional(),
+      content: z.array(ListItemNodeSchema).min(1),
+    }),
 );
 
-const CaptionNodeSchema: z.ZodType<T.CaptionNodeType> = z.lazy(() =>
+export const CaptionNodeSchema: z.ZodType<T.CaptionNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("caption")]),
     attrs: z.strictObject({ localId: z.string().optional() }).optional(),
@@ -201,22 +204,25 @@ const CaptionNodeSchema: z.ZodType<T.CaptionNodeType> = z.lazy(() =>
   }),
 );
 
-const CodeInlineNodeSchema: z.ZodType<T.CodeInlineNodeType> = z.lazy(() =>
-  z.intersection(
-    TextNodeSchema,
-    z.object({
-      marks: z
-        .array(z.union([CodeMarkSchema, LinkMarkSchema, AnnotationMarkSchema]))
-        .optional(),
-    }),
-  ),
+export const CodeInlineNodeSchema: z.ZodType<T.CodeInlineNodeType> = z.lazy(
+  () =>
+    z.intersection(
+      TextNodeSchema,
+      z.object({
+        marks: z
+          .array(
+            z.union([CodeMarkSchema, LinkMarkSchema, AnnotationMarkSchema]),
+          )
+          .optional(),
+      }),
+    ),
 );
 
-const CodeMarkSchema: z.ZodType<T.CodeMarkType> = z.lazy(() =>
+export const CodeMarkSchema: z.ZodType<T.CodeMarkType> = z.lazy(() =>
   z.strictObject({ type: z.union([z.literal("code")]) }),
 );
 
-const CodeBlockNodeSchema: z.ZodType<T.CodeBlockNodeType> = z.lazy(() =>
+export const CodeBlockNodeSchema: z.ZodType<T.CodeBlockNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("codeBlock")]),
     marks: z.array(z.unknown()).optional(),
@@ -231,7 +237,7 @@ const CodeBlockNodeSchema: z.ZodType<T.CodeBlockNodeType> = z.lazy(() =>
   }),
 );
 
-const CodeBlockRootOnlyNodeSchema: z.ZodType<T.CodeBlockRootOnlyNodeType> =
+export const CodeBlockRootOnlyNodeSchema: z.ZodType<T.CodeBlockRootOnlyNodeType> =
   z.lazy(() =>
     z.strictObject({
       type: z.union([z.literal("codeBlock")]),
@@ -247,14 +253,15 @@ const CodeBlockRootOnlyNodeSchema: z.ZodType<T.CodeBlockRootOnlyNodeType> =
     }),
   );
 
-const DataConsumerMarkSchema: z.ZodType<T.DataConsumerMarkType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("dataConsumer")]),
-    attrs: z.strictObject({ sources: z.array(z.string()).min(1) }),
-  }),
+export const DataConsumerMarkSchema: z.ZodType<T.DataConsumerMarkType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("dataConsumer")]),
+      attrs: z.strictObject({ sources: z.array(z.string()).min(1) }),
+    }),
 );
 
-const DateNodeSchema: z.ZodType<T.DateNodeType> = z.lazy(() =>
+export const DateNodeSchema: z.ZodType<T.DateNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("date")]),
     attrs: z.strictObject({
@@ -264,23 +271,25 @@ const DateNodeSchema: z.ZodType<T.DateNodeType> = z.lazy(() =>
   }),
 );
 
-const DecisionItemNodeSchema: z.ZodType<T.DecisionItemNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("decisionItem")]),
-    attrs: z.strictObject({ localId: z.string(), state: z.string() }),
-    content: z.array(InlineNodeSchema).optional(),
-  }),
+export const DecisionItemNodeSchema: z.ZodType<T.DecisionItemNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("decisionItem")]),
+      attrs: z.strictObject({ localId: z.string(), state: z.string() }),
+      content: z.array(InlineNodeSchema).optional(),
+    }),
 );
 
-const DecisionListNodeSchema: z.ZodType<T.DecisionListNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("decisionList")]),
-    attrs: z.strictObject({ localId: z.string() }),
-    content: z.array(DecisionItemNodeSchema).min(1),
-  }),
+export const DecisionListNodeSchema: z.ZodType<T.DecisionListNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("decisionList")]),
+      attrs: z.strictObject({ localId: z.string() }),
+      content: z.array(DecisionItemNodeSchema).min(1),
+    }),
 );
 
-const DocNodeSchema: z.ZodType<T.DocNodeType> = z.lazy(() =>
+export const DocNodeSchema: z.ZodType<T.DocNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("doc")]),
     content: z.array(
@@ -317,11 +326,11 @@ const DocNodeSchema: z.ZodType<T.DocNodeType> = z.lazy(() =>
   }),
 );
 
-const EmMarkSchema: z.ZodType<T.EmMarkType> = z.lazy(() =>
+export const EmMarkSchema: z.ZodType<T.EmMarkType> = z.lazy(() =>
   z.strictObject({ type: z.union([z.literal("em")]) }),
 );
 
-const EmbedCardNodeSchema: z.ZodType<T.EmbedCardNodeType> = z.lazy(() =>
+export const EmbedCardNodeSchema: z.ZodType<T.EmbedCardNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("embedCard")]),
     attrs: z.strictObject({
@@ -343,7 +352,7 @@ const EmbedCardNodeSchema: z.ZodType<T.EmbedCardNodeType> = z.lazy(() =>
   }),
 );
 
-const EmojiNodeSchema: z.ZodType<T.EmojiNodeType> = z.lazy(() =>
+export const EmojiNodeSchema: z.ZodType<T.EmojiNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("emoji")]),
     attrs: z.strictObject({
@@ -355,7 +364,7 @@ const EmojiNodeSchema: z.ZodType<T.EmojiNodeType> = z.lazy(() =>
   }),
 );
 
-const ExpandNodeSchema: z.ZodType<T.ExpandNodeType> = z.lazy(() =>
+export const ExpandNodeSchema: z.ZodType<T.ExpandNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("expand")]),
     marks: z.array(z.unknown()).optional(),
@@ -376,8 +385,8 @@ const ExpandNodeSchema: z.ZodType<T.ExpandNodeType> = z.lazy(() =>
   }),
 );
 
-const ExpandRootOnlyNodeSchema: z.ZodType<T.ExpandRootOnlyNodeType> = z.lazy(
-  () =>
+export const ExpandRootOnlyNodeSchema: z.ZodType<T.ExpandRootOnlyNodeType> =
+  z.lazy(() =>
     z.strictObject({
       type: z.union([z.literal("expand")]),
       marks: z.array(BreakoutMarkSchema).optional(),
@@ -396,9 +405,9 @@ const ExpandRootOnlyNodeSchema: z.ZodType<T.ExpandRootOnlyNodeType> = z.lazy(
         )
         .min(1),
     }),
-);
+  );
 
-const ExtensionNodeSchema: z.ZodType<T.ExtensionNodeType> = z.lazy(() =>
+export const ExtensionNodeSchema: z.ZodType<T.ExtensionNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("extension")]),
     marks: z.array(z.unknown()).optional(),
@@ -419,7 +428,7 @@ const ExtensionNodeSchema: z.ZodType<T.ExtensionNodeType> = z.lazy(() =>
   }),
 );
 
-const ExtensionWithMarksNodeSchema: z.ZodType<T.ExtensionWithMarksNodeType> =
+export const ExtensionWithMarksNodeSchema: z.ZodType<T.ExtensionWithMarksNodeType> =
   z.lazy(() =>
     z.intersection(
       ExtensionNodeSchema,
@@ -431,7 +440,7 @@ const ExtensionWithMarksNodeSchema: z.ZodType<T.ExtensionWithMarksNodeType> =
     ),
   );
 
-const FormattedTextInlineNodeSchema: z.ZodType<T.FormattedTextInlineNodeType> =
+export const FormattedTextInlineNodeSchema: z.ZodType<T.FormattedTextInlineNodeType> =
   z.lazy(() =>
     z.intersection(
       TextNodeSchema,
@@ -455,7 +464,7 @@ const FormattedTextInlineNodeSchema: z.ZodType<T.FormattedTextInlineNodeType> =
     ),
   );
 
-const FragmentMarkSchema: z.ZodType<T.FragmentMarkType> = z.lazy(() =>
+export const FragmentMarkSchema: z.ZodType<T.FragmentMarkType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("fragment")]),
     attrs: z.strictObject({
@@ -465,7 +474,7 @@ const FragmentMarkSchema: z.ZodType<T.FragmentMarkType> = z.lazy(() =>
   }),
 );
 
-const HardBreakNodeSchema: z.ZodType<T.HardBreakNodeType> = z.lazy(() =>
+export const HardBreakNodeSchema: z.ZodType<T.HardBreakNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("hardBreak")]),
     attrs: z
@@ -477,7 +486,7 @@ const HardBreakNodeSchema: z.ZodType<T.HardBreakNodeType> = z.lazy(() =>
   }),
 );
 
-const HeadingNodeSchema: z.ZodType<T.HeadingNodeType> = z.lazy(() =>
+export const HeadingNodeSchema: z.ZodType<T.HeadingNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("heading")]),
     marks: z.array(z.unknown()).optional(),
@@ -489,7 +498,7 @@ const HeadingNodeSchema: z.ZodType<T.HeadingNodeType> = z.lazy(() =>
   }),
 );
 
-const HeadingWithAlignmentNodeSchema: z.ZodType<T.HeadingWithAlignmentNodeType> =
+export const HeadingWithAlignmentNodeSchema: z.ZodType<T.HeadingWithAlignmentNodeType> =
   z.lazy(() =>
     z.intersection(
       HeadingNodeSchema,
@@ -497,7 +506,7 @@ const HeadingWithAlignmentNodeSchema: z.ZodType<T.HeadingWithAlignmentNodeType> 
     ),
   );
 
-const HeadingWithIndentationNodeSchema: z.ZodType<T.HeadingWithIndentationNodeType> =
+export const HeadingWithIndentationNodeSchema: z.ZodType<T.HeadingWithIndentationNodeType> =
   z.lazy(() =>
     z.intersection(
       HeadingNodeSchema,
@@ -505,7 +514,7 @@ const HeadingWithIndentationNodeSchema: z.ZodType<T.HeadingWithIndentationNodeTy
     ),
   );
 
-const HeadingWithNoMarksNodeSchema: z.ZodType<T.HeadingWithNoMarksNodeType> =
+export const HeadingWithNoMarksNodeSchema: z.ZodType<T.HeadingWithNoMarksNodeType> =
   z.lazy(() =>
     z.intersection(
       HeadingNodeSchema,
@@ -513,14 +522,15 @@ const HeadingWithNoMarksNodeSchema: z.ZodType<T.HeadingWithNoMarksNodeType> =
     ),
   );
 
-const IndentationMarkSchema: z.ZodType<T.IndentationMarkType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("indentation")]),
-    attrs: z.strictObject({ level: z.number().min(1).max(6) }),
-  }),
+export const IndentationMarkSchema: z.ZodType<T.IndentationMarkType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("indentation")]),
+      attrs: z.strictObject({ level: z.number().min(1).max(6) }),
+    }),
 );
 
-const InlineNodeSchema: z.ZodType<T.InlineNodeType> = z.lazy(() =>
+export const InlineNodeSchema: z.ZodType<T.InlineNodeType> = z.lazy(() =>
   z.union([
     FormattedTextInlineNodeSchema,
     CodeInlineNodeSchema,
@@ -536,18 +546,19 @@ const InlineNodeSchema: z.ZodType<T.InlineNodeType> = z.lazy(() =>
   ]),
 );
 
-const InlineCardNodeSchema: z.ZodType<T.InlineCardNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("inlineCard")]),
-    attrs: z.union([
-      z.strictObject({ url: z.string(), localId: z.string().optional() }),
-      z.strictObject({ data: z.unknown(), localId: z.string().optional() }),
-    ]),
-  }),
+export const InlineCardNodeSchema: z.ZodType<T.InlineCardNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("inlineCard")]),
+      attrs: z.union([
+        z.strictObject({ url: z.string(), localId: z.string().optional() }),
+        z.strictObject({ data: z.unknown(), localId: z.string().optional() }),
+      ]),
+    }),
 );
 
-const InlineExtensionNodeSchema: z.ZodType<T.InlineExtensionNodeType> = z.lazy(
-  () =>
+export const InlineExtensionNodeSchema: z.ZodType<T.InlineExtensionNodeType> =
+  z.lazy(() =>
     z.strictObject({
       type: z.union([z.literal("inlineExtension")]),
       marks: z.array(z.unknown()).optional(),
@@ -559,9 +570,9 @@ const InlineExtensionNodeSchema: z.ZodType<T.InlineExtensionNodeType> = z.lazy(
         localId: z.string().min(1).optional(),
       }),
     }),
-);
+  );
 
-const InlineExtensionWithMarksNodeSchema: z.ZodType<T.InlineExtensionWithMarksNodeType> =
+export const InlineExtensionWithMarksNodeSchema: z.ZodType<T.InlineExtensionWithMarksNodeType> =
   z.lazy(() =>
     z.intersection(
       InlineExtensionNodeSchema,
@@ -573,18 +584,19 @@ const InlineExtensionWithMarksNodeSchema: z.ZodType<T.InlineExtensionWithMarksNo
     ),
   );
 
-const LayoutColumnNodeSchema: z.ZodType<T.LayoutColumnNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("layoutColumn")]),
-    attrs: z.strictObject({
-      width: z.number().max(100),
-      localId: z.string().optional(),
+export const LayoutColumnNodeSchema: z.ZodType<T.LayoutColumnNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("layoutColumn")]),
+      attrs: z.strictObject({
+        width: z.number().max(100),
+        localId: z.string().optional(),
+      }),
+      content: z.array(BlockContentSchema).min(1),
     }),
-    content: z.array(BlockContentSchema).min(1),
-  }),
 );
 
-const LayoutSectionFullNodeSchema: z.ZodType<T.LayoutSectionFullNodeType> =
+export const LayoutSectionFullNodeSchema: z.ZodType<T.LayoutSectionFullNodeType> =
   z.lazy(() =>
     z.intersection(
       LayoutSectionNodeSchema,
@@ -595,16 +607,17 @@ const LayoutSectionFullNodeSchema: z.ZodType<T.LayoutSectionFullNodeType> =
     ),
   );
 
-const LayoutSectionNodeSchema: z.ZodType<T.LayoutSectionNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("layoutSection")]),
-    marks: z.array(BreakoutMarkSchema).optional(),
-    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
-    content: z.array(LayoutColumnNodeSchema),
-  }),
-);
+export const LayoutSectionNodeSchema: z.ZodType<T.LayoutSectionNodeType> =
+  z.lazy(() =>
+    z.strictObject({
+      type: z.union([z.literal("layoutSection")]),
+      marks: z.array(BreakoutMarkSchema).optional(),
+      attrs: z.strictObject({ localId: z.string().optional() }).optional(),
+      content: z.array(LayoutColumnNodeSchema),
+    }),
+  );
 
-const LinkMarkSchema: z.ZodType<T.LinkMarkType> = z.lazy(() =>
+export const LinkMarkSchema: z.ZodType<T.LinkMarkType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("link")]),
     attrs: z.strictObject({
@@ -617,7 +630,7 @@ const LinkMarkSchema: z.ZodType<T.LinkMarkType> = z.lazy(() =>
   }),
 );
 
-const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
+export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("listItem")]),
     attrs: z.strictObject({ localId: z.string().optional() }).optional(),
@@ -649,7 +662,7 @@ const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
   }),
 );
 
-const MediaNodeSchema: z.ZodType<T.MediaNodeType> = z.lazy(() =>
+export const MediaNodeSchema: z.ZodType<T.MediaNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("media")]),
     marks: z
@@ -678,36 +691,40 @@ const MediaNodeSchema: z.ZodType<T.MediaNodeType> = z.lazy(() =>
   }),
 );
 
-const MediaGroupNodeSchema: z.ZodType<T.MediaGroupNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("mediaGroup")]),
-    content: z.array(MediaNodeSchema).min(1),
-  }),
-);
-
-const MediaInlineNodeSchema: z.ZodType<T.MediaInlineNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("mediaInline")]),
-    marks: z
-      .array(z.union([LinkMarkSchema, AnnotationMarkSchema, BorderMarkSchema]))
-      .optional(),
-    attrs: z.strictObject({
-      type: z
-        .union([z.literal("link"), z.literal("file"), z.literal("image")])
-        .optional(),
-      localId: z.string().optional(),
-      id: z.string().min(1),
-      alt: z.string().optional(),
-      collection: z.string(),
-      occurrenceKey: z.string().min(1).optional(),
-      width: z.number().optional(),
-      height: z.number().optional(),
-      data: z.unknown().optional(),
+export const MediaGroupNodeSchema: z.ZodType<T.MediaGroupNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("mediaGroup")]),
+      content: z.array(MediaNodeSchema).min(1),
     }),
-  }),
 );
 
-const MediaSingleCaptionNodeSchema: z.ZodType<T.MediaSingleCaptionNodeType> =
+export const MediaInlineNodeSchema: z.ZodType<T.MediaInlineNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("mediaInline")]),
+      marks: z
+        .array(
+          z.union([LinkMarkSchema, AnnotationMarkSchema, BorderMarkSchema]),
+        )
+        .optional(),
+      attrs: z.strictObject({
+        type: z
+          .union([z.literal("link"), z.literal("file"), z.literal("image")])
+          .optional(),
+        localId: z.string().optional(),
+        id: z.string().min(1),
+        alt: z.string().optional(),
+        collection: z.string(),
+        occurrenceKey: z.string().min(1).optional(),
+        width: z.number().optional(),
+        height: z.number().optional(),
+        data: z.unknown().optional(),
+      }),
+    }),
+);
+
+export const MediaSingleCaptionNodeSchema: z.ZodType<T.MediaSingleCaptionNodeType> =
   z.lazy(() =>
     z.intersection(
       MediaSingleNodeSchema,
@@ -720,54 +737,55 @@ const MediaSingleCaptionNodeSchema: z.ZodType<T.MediaSingleCaptionNodeType> =
     ),
   );
 
-const MediaSingleFullNodeSchema: z.ZodType<T.MediaSingleFullNodeType> = z.lazy(
-  () =>
+export const MediaSingleFullNodeSchema: z.ZodType<T.MediaSingleFullNodeType> =
+  z.lazy(() =>
     z.intersection(
       MediaSingleNodeSchema,
       z.object({ content: z.array(MediaNodeSchema).min(1).max(1) }),
     ),
+  );
+
+export const MediaSingleNodeSchema: z.ZodType<T.MediaSingleNodeType> = z.lazy(
+  () =>
+    z.object({
+      type: z.union([z.literal("mediaSingle")]),
+      marks: z.array(LinkMarkSchema).optional(),
+      attrs: z
+        .union([
+          z.strictObject({
+            localId: z.string().optional(),
+            width: z.number().max(100).optional(),
+            layout: z.union([
+              z.literal("wide"),
+              z.literal("full-width"),
+              z.literal("center"),
+              z.literal("wrap-right"),
+              z.literal("wrap-left"),
+              z.literal("align-end"),
+              z.literal("align-start"),
+            ]),
+            widthType: z.union([z.literal("percentage")]).optional(),
+          }),
+          z.strictObject({
+            localId: z.string().optional(),
+            width: z.number(),
+            widthType: z.union([z.literal("pixel")]),
+            layout: z.union([
+              z.literal("wide"),
+              z.literal("full-width"),
+              z.literal("center"),
+              z.literal("wrap-right"),
+              z.literal("wrap-left"),
+              z.literal("align-end"),
+              z.literal("align-start"),
+            ]),
+          }),
+        ])
+        .optional(),
+    }),
 );
 
-const MediaSingleNodeSchema: z.ZodType<T.MediaSingleNodeType> = z.lazy(() =>
-  z.object({
-    type: z.union([z.literal("mediaSingle")]),
-    marks: z.array(LinkMarkSchema).optional(),
-    attrs: z
-      .union([
-        z.strictObject({
-          localId: z.string().optional(),
-          width: z.number().max(100).optional(),
-          layout: z.union([
-            z.literal("wide"),
-            z.literal("full-width"),
-            z.literal("center"),
-            z.literal("wrap-right"),
-            z.literal("wrap-left"),
-            z.literal("align-end"),
-            z.literal("align-start"),
-          ]),
-          widthType: z.union([z.literal("percentage")]).optional(),
-        }),
-        z.strictObject({
-          localId: z.string().optional(),
-          width: z.number(),
-          widthType: z.union([z.literal("pixel")]),
-          layout: z.union([
-            z.literal("wide"),
-            z.literal("full-width"),
-            z.literal("center"),
-            z.literal("wrap-right"),
-            z.literal("wrap-left"),
-            z.literal("align-end"),
-            z.literal("align-start"),
-          ]),
-        }),
-      ])
-      .optional(),
-  }),
-);
-
-const MentionNodeSchema: z.ZodType<T.MentionNodeType> = z.lazy(() =>
+export const MentionNodeSchema: z.ZodType<T.MentionNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("mention")]),
     attrs: z.strictObject({
@@ -782,8 +800,8 @@ const MentionNodeSchema: z.ZodType<T.MentionNodeType> = z.lazy(() =>
   }),
 );
 
-const NestedExpandContentSchema: z.ZodType<T.NestedExpandContentType> = z.lazy(
-  () =>
+export const NestedExpandContentSchema: z.ZodType<T.NestedExpandContentType> =
+  z.lazy(() =>
     z
       .array(
         z.union([
@@ -804,20 +822,21 @@ const NestedExpandContentSchema: z.ZodType<T.NestedExpandContentType> = z.lazy(
         ]),
       )
       .min(1),
-);
+  );
 
-const NestedExpandNodeSchema: z.ZodType<T.NestedExpandNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("nestedExpand")]),
-    attrs: z.strictObject({
-      title: z.string().optional(),
-      localId: z.string().optional(),
+export const NestedExpandNodeSchema: z.ZodType<T.NestedExpandNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("nestedExpand")]),
+      attrs: z.strictObject({
+        title: z.string().optional(),
+        localId: z.string().optional(),
+      }),
+      content: NestedExpandContentSchema,
     }),
-    content: NestedExpandContentSchema,
-  }),
 );
 
-const NestedExpandWithNoMarksNodeSchema: z.ZodType<T.NestedExpandWithNoMarksNodeType> =
+export const NestedExpandWithNoMarksNodeSchema: z.ZodType<T.NestedExpandWithNoMarksNodeType> =
   z.lazy(() =>
     z.intersection(
       NestedExpandNodeSchema,
@@ -825,7 +844,7 @@ const NestedExpandWithNoMarksNodeSchema: z.ZodType<T.NestedExpandWithNoMarksNode
     ),
   );
 
-const NonNestableBlockContentSchema: z.ZodType<T.NonNestableBlockContentType> =
+export const NonNestableBlockContentSchema: z.ZodType<T.NonNestableBlockContentType> =
   z.lazy(() =>
     z.union([
       ParagraphWithNoMarksNodeSchema,
@@ -848,20 +867,21 @@ const NonNestableBlockContentSchema: z.ZodType<T.NonNestableBlockContentType> =
     ]),
   );
 
-const OrderedListNodeSchema: z.ZodType<T.OrderedListNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("orderedList")]),
-    attrs: z
-      .strictObject({
-        order: z.number().optional(),
-        localId: z.string().optional(),
-      })
-      .optional(),
-    content: z.array(ListItemNodeSchema).min(1),
-  }),
+export const OrderedListNodeSchema: z.ZodType<T.OrderedListNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("orderedList")]),
+      attrs: z
+        .strictObject({
+          order: z.number().optional(),
+          localId: z.string().optional(),
+        })
+        .optional(),
+      content: z.array(ListItemNodeSchema).min(1),
+    }),
 );
 
-const PanelNodeSchema: z.ZodType<T.PanelNodeType> = z.lazy(() =>
+export const PanelNodeSchema: z.ZodType<T.PanelNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("panel")]),
     attrs: z.strictObject({
@@ -902,7 +922,7 @@ const PanelNodeSchema: z.ZodType<T.PanelNodeType> = z.lazy(() =>
   }),
 );
 
-const ParagraphNodeSchema: z.ZodType<T.ParagraphNodeType> = z.lazy(() =>
+export const ParagraphNodeSchema: z.ZodType<T.ParagraphNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("paragraph")]),
     marks: z.array(z.unknown()).optional(),
@@ -911,7 +931,7 @@ const ParagraphNodeSchema: z.ZodType<T.ParagraphNodeType> = z.lazy(() =>
   }),
 );
 
-const ParagraphWithAlignmentNodeSchema: z.ZodType<T.ParagraphWithAlignmentNodeType> =
+export const ParagraphWithAlignmentNodeSchema: z.ZodType<T.ParagraphWithAlignmentNodeType> =
   z.lazy(() =>
     z.intersection(
       ParagraphNodeSchema,
@@ -919,7 +939,7 @@ const ParagraphWithAlignmentNodeSchema: z.ZodType<T.ParagraphWithAlignmentNodeTy
     ),
   );
 
-const ParagraphWithIndentationNodeSchema: z.ZodType<T.ParagraphWithIndentationNodeType> =
+export const ParagraphWithIndentationNodeSchema: z.ZodType<T.ParagraphWithIndentationNodeType> =
   z.lazy(() =>
     z.intersection(
       ParagraphNodeSchema,
@@ -927,7 +947,7 @@ const ParagraphWithIndentationNodeSchema: z.ZodType<T.ParagraphWithIndentationNo
     ),
   );
 
-const ParagraphWithNoMarksNodeSchema: z.ZodType<T.ParagraphWithNoMarksNodeType> =
+export const ParagraphWithNoMarksNodeSchema: z.ZodType<T.ParagraphWithNoMarksNodeType> =
   z.lazy(() =>
     z.intersection(
       ParagraphNodeSchema,
@@ -935,21 +955,25 @@ const ParagraphWithNoMarksNodeSchema: z.ZodType<T.ParagraphWithNoMarksNodeType> 
     ),
   );
 
-const PlaceholderNodeSchema: z.ZodType<T.PlaceholderNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("placeholder")]),
-    attrs: z.strictObject({ text: z.string(), localId: z.string().optional() }),
-  }),
+export const PlaceholderNodeSchema: z.ZodType<T.PlaceholderNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("placeholder")]),
+      attrs: z.strictObject({
+        text: z.string(),
+        localId: z.string().optional(),
+      }),
+    }),
 );
 
-const RuleNodeSchema: z.ZodType<T.RuleNodeType> = z.lazy(() =>
+export const RuleNodeSchema: z.ZodType<T.RuleNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("rule")]),
     attrs: z.strictObject({ localId: z.string().optional() }).optional(),
   }),
 );
 
-const StatusNodeSchema: z.ZodType<T.StatusNodeType> = z.lazy(() =>
+export const StatusNodeSchema: z.ZodType<T.StatusNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("status")]),
     attrs: z.strictObject({
@@ -968,15 +992,15 @@ const StatusNodeSchema: z.ZodType<T.StatusNodeType> = z.lazy(() =>
   }),
 );
 
-const StrikeMarkSchema: z.ZodType<T.StrikeMarkType> = z.lazy(() =>
+export const StrikeMarkSchema: z.ZodType<T.StrikeMarkType> = z.lazy(() =>
   z.strictObject({ type: z.union([z.literal("strike")]) }),
 );
 
-const StrongMarkSchema: z.ZodType<T.StrongMarkType> = z.lazy(() =>
+export const StrongMarkSchema: z.ZodType<T.StrongMarkType> = z.lazy(() =>
   z.strictObject({ type: z.union([z.literal("strong")]) }),
 );
 
-const SubsupMarkSchema: z.ZodType<T.SubsupMarkType> = z.lazy(() =>
+export const SubsupMarkSchema: z.ZodType<T.SubsupMarkType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("subsup")]),
     attrs: z.strictObject({
@@ -985,36 +1009,37 @@ const SubsupMarkSchema: z.ZodType<T.SubsupMarkType> = z.lazy(() =>
   }),
 );
 
-const TableCellContentSchema: z.ZodType<T.TableCellContentType> = z.lazy(() =>
-  z
-    .array(
-      z.union([
-        ParagraphWithNoMarksNodeSchema,
-        ParagraphWithAlignmentNodeSchema,
-        PanelNodeSchema,
-        BlockquoteNodeSchema,
-        OrderedListNodeSchema,
-        BulletListNodeSchema,
-        RuleNodeSchema,
-        HeadingWithNoMarksNodeSchema,
-        HeadingWithAlignmentNodeSchema,
-        HeadingWithIndentationNodeSchema,
-        CodeBlockNodeSchema,
-        MediaSingleCaptionNodeSchema,
-        MediaSingleFullNodeSchema,
-        MediaGroupNodeSchema,
-        DecisionListNodeSchema,
-        TaskListNodeSchema,
-        BlockCardNodeSchema,
-        EmbedCardNodeSchema,
-        ExtensionWithMarksNodeSchema,
-        NestedExpandWithNoMarksNodeSchema,
-      ]),
-    )
-    .min(1),
+export const TableCellContentSchema: z.ZodType<T.TableCellContentType> = z.lazy(
+  () =>
+    z
+      .array(
+        z.union([
+          ParagraphWithNoMarksNodeSchema,
+          ParagraphWithAlignmentNodeSchema,
+          PanelNodeSchema,
+          BlockquoteNodeSchema,
+          OrderedListNodeSchema,
+          BulletListNodeSchema,
+          RuleNodeSchema,
+          HeadingWithNoMarksNodeSchema,
+          HeadingWithAlignmentNodeSchema,
+          HeadingWithIndentationNodeSchema,
+          CodeBlockNodeSchema,
+          MediaSingleCaptionNodeSchema,
+          MediaSingleFullNodeSchema,
+          MediaGroupNodeSchema,
+          DecisionListNodeSchema,
+          TaskListNodeSchema,
+          BlockCardNodeSchema,
+          EmbedCardNodeSchema,
+          ExtensionWithMarksNodeSchema,
+          NestedExpandWithNoMarksNodeSchema,
+        ]),
+      )
+      .min(1),
 );
 
-const TableCellNodeSchema: z.ZodType<T.TableCellNodeType> = z.lazy(() =>
+export const TableCellNodeSchema: z.ZodType<T.TableCellNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("tableCell")]),
     attrs: z
@@ -1030,23 +1055,24 @@ const TableCellNodeSchema: z.ZodType<T.TableCellNodeType> = z.lazy(() =>
   }),
 );
 
-const TableHeaderNodeSchema: z.ZodType<T.TableHeaderNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.union([z.literal("tableHeader")]),
-    attrs: z
-      .strictObject({
-        colspan: z.number().optional(),
-        rowspan: z.number().optional(),
-        colwidth: z.array(z.number()).optional(),
-        background: z.string().optional(),
-        localId: z.string().optional(),
-      })
-      .optional(),
-    content: TableCellContentSchema,
-  }),
+export const TableHeaderNodeSchema: z.ZodType<T.TableHeaderNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.union([z.literal("tableHeader")]),
+      attrs: z
+        .strictObject({
+          colspan: z.number().optional(),
+          rowspan: z.number().optional(),
+          colwidth: z.array(z.number()).optional(),
+          background: z.string().optional(),
+          localId: z.string().optional(),
+        })
+        .optional(),
+      content: TableCellContentSchema,
+    }),
 );
 
-const TableNodeSchema: z.ZodType<T.TableNodeType> = z.lazy(() =>
+export const TableNodeSchema: z.ZodType<T.TableNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("table")]),
     marks: z.array(FragmentMarkSchema).optional(),
@@ -1074,7 +1100,7 @@ const TableNodeSchema: z.ZodType<T.TableNodeType> = z.lazy(() =>
   }),
 );
 
-const TableRowNodeSchema: z.ZodType<T.TableRowNodeType> = z.lazy(() =>
+export const TableRowNodeSchema: z.ZodType<T.TableRowNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("tableRow")]),
     attrs: z.strictObject({ localId: z.string().optional() }).optional(),
@@ -1082,7 +1108,7 @@ const TableRowNodeSchema: z.ZodType<T.TableRowNodeType> = z.lazy(() =>
   }),
 );
 
-const TaskItemNodeSchema: z.ZodType<T.TaskItemNodeType> = z.lazy(() =>
+export const TaskItemNodeSchema: z.ZodType<T.TaskItemNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("taskItem")]),
     attrs: z.strictObject({
@@ -1093,7 +1119,7 @@ const TaskItemNodeSchema: z.ZodType<T.TaskItemNodeType> = z.lazy(() =>
   }),
 );
 
-const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
+export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("taskList")]),
     attrs: z.strictObject({ localId: z.string() }),
@@ -1110,7 +1136,7 @@ const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
   }),
 );
 
-const TextNodeSchema: z.ZodType<T.TextNodeType> = z.lazy(() =>
+export const TextNodeSchema: z.ZodType<T.TextNodeType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("text")]),
     marks: z.array(z.unknown()).optional(),
@@ -1118,21 +1144,21 @@ const TextNodeSchema: z.ZodType<T.TextNodeType> = z.lazy(() =>
   }),
 );
 
-const TextWithNoMarksNodeSchema: z.ZodType<T.TextWithNoMarksNodeType> = z.lazy(
-  () =>
+export const TextWithNoMarksNodeSchema: z.ZodType<T.TextWithNoMarksNodeType> =
+  z.lazy(() =>
     z.intersection(
       TextNodeSchema,
       z.object({ marks: z.array(z.unknown()).optional() }),
     ),
-);
+  );
 
-const TextColorMarkSchema: z.ZodType<T.TextColorMarkType> = z.lazy(() =>
+export const TextColorMarkSchema: z.ZodType<T.TextColorMarkType> = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("textColor")]),
     attrs: z.strictObject({ color: z.string().regex(/^#[0-9a-fA-F]{6}$/) }),
   }),
 );
 
-const UnderlineMarkSchema: z.ZodType<T.UnderlineMarkType> = z.lazy(() =>
+export const UnderlineMarkSchema: z.ZodType<T.UnderlineMarkType> = z.lazy(() =>
   z.strictObject({ type: z.union([z.literal("underline")]) }),
 );
