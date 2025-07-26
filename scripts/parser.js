@@ -13,6 +13,7 @@ function parseNode(schema = {}) {
     parseAnyOf(schema) ||
     parseAllOf(schema) ||
     parseEnum(schema) ||
+    parseTuple(schema) ||
     `z.unknown()`
   );
 }
@@ -137,4 +138,12 @@ function parseString(schema = {}) {
   }
 
   return str;
+}
+
+function parseTuple(schema = []) {
+  if (!Array.isArray(schema)) {
+    return "";
+  }
+
+  return `z.lazy(() => z.tuple([${schema.map((node) => parseNode(node)).join(",")}]))`;
 }

@@ -594,7 +594,31 @@ const listItem_node = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("listItem")]),
     attrs: z.strictObject({ localId: z.string().optional() }).optional(),
-    content: z.array(z.unknown()).min(1),
+    content: z
+      .array(
+        z.lazy(() =>
+          z.tuple([
+            z.union([
+              paragraph_with_no_marks_node,
+              mediaSingle_caption_node,
+              mediaSingle_full_node,
+              codeBlock_node,
+              extension_with_marks_node,
+            ]),
+            z.union([
+              paragraph_with_no_marks_node,
+              bulletList_node,
+              orderedList_node,
+              taskList_node,
+              mediaSingle_caption_node,
+              mediaSingle_full_node,
+              codeBlock_node,
+              extension_with_marks_node,
+            ]),
+          ]),
+        ),
+      )
+      .min(1),
   }),
 );
 
@@ -659,7 +683,12 @@ const mediaInline_node = z.lazy(() =>
 const mediaSingle_caption_node = z.lazy(() =>
   z.intersection(
     mediaSingle_node,
-    z.object({ content: z.array(z.unknown()).min(1).max(2) }),
+    z.object({
+      content: z
+        .array(z.lazy(() => z.tuple([media_node, caption_node])))
+        .min(1)
+        .max(2),
+    }),
   ),
 );
 
@@ -1033,7 +1062,13 @@ const taskList_node = z.lazy(() =>
   z.strictObject({
     type: z.union([z.literal("taskList")]),
     attrs: z.strictObject({ localId: z.string() }),
-    content: z.array(z.unknown()).min(1),
+    content: z
+      .array(
+        z.lazy(() =>
+          z.tuple([taskItem_node, z.union([taskItem_node, taskList_node])]),
+        ),
+      )
+      .min(1),
   }),
 );
 
