@@ -1,10 +1,12 @@
 {
-  "name": "adf-builder",
+  "name": "@jonas-lundahl/adf-builder",
+  "private": "false",
   "version": "1.0.0",
-  "description": "Build Atlassian documents",
+  "description": "Build and validate Atlassian documents using Zod schemas",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "generate": "node scripts/generate.js"
   },
   "keywords": [
@@ -12,10 +14,11 @@
     "document",
     "format",
     "adf",
-    "confluence"
+    "confluence",
+    "zod"
   ],
   "author": "Jonas Lundahl",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "devDependencies": {
     "prettier": "^3.6.2",
@@ -23,5 +26,22 @@
   },
   "dependencies": {
     "zod": "^4.0.10"
-  }
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./schema": {
+      "import": "./dist/__generated__/schema.js",
+      "types": "./dist/__generated__/schema.d.ts"
+    },
+    "./types": {
+      "import": "./dist/__generated__/types.js",
+      "types": "./dist/__generated__/types.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ]
 }

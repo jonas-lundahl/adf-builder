@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import * as T from "./types";
+import * as T from "./types.js";
 
 export const AlignmentMarkSchema: z.ZodType<T.AlignmentMarkType> = z.lazy(() =>
   z.strictObject({
