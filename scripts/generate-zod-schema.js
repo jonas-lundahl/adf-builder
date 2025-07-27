@@ -175,7 +175,7 @@ function createComment(schema = {}, name) {
     JSON.stringify(schema, null, 2),
     `</pre>`,
     ``,
-    `@see ${typeName(name)}`,
+    `@see T.${typeName(name)}`,
   ];
   return blockComment(lines.join("\n"));
 }

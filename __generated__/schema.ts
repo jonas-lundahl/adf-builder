@@ -38,7 +38,7 @@ import * as T from "./types.js";
  * }
  * </pre>
  *
- * @see AlignmentMarkType
+ * @see T.AlignmentMarkType
  */
 export const AlignmentMarkSchema: z.ZodType<T.AlignmentMarkType> = z.lazy(() =>
   z.strictObject({
@@ -88,7 +88,7 @@ export const AlignmentMarkSchema: z.ZodType<T.AlignmentMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see AnnotationMarkType
+ * @see T.AnnotationMarkType
  */
 export const AnnotationMarkSchema: z.ZodType<T.AnnotationMarkType> = z.lazy(
   () =>
@@ -135,7 +135,7 @@ export const AnnotationMarkSchema: z.ZodType<T.AnnotationMarkType> = z.lazy(
  * }
  * </pre>
  *
- * @see BackgroundColorMarkType
+ * @see T.BackgroundColorMarkType
  */
 export const BackgroundColorMarkSchema: z.ZodType<T.BackgroundColorMarkType> =
   z.lazy(() =>
@@ -224,7 +224,7 @@ export const BackgroundColorMarkSchema: z.ZodType<T.BackgroundColorMarkType> =
  * }
  * </pre>
  *
- * @see BlockContentType
+ * @see T.BlockContentType
  */
 export const BlockContentSchema: z.ZodType<T.BlockContentType> = z.lazy(() =>
   z.union([
@@ -368,7 +368,7 @@ export const BlockContentSchema: z.ZodType<T.BlockContentType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see BlockCardNodeType
+ * @see T.BlockCardNodeType
  */
 export const BlockCardNodeSchema: z.ZodType<T.BlockCardNodeType> = z.lazy(() =>
   z.strictObject({
@@ -470,7 +470,7 @@ export const BlockCardNodeSchema: z.ZodType<T.BlockCardNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see BlockquoteNodeType
+ * @see T.BlockquoteNodeType
  */
 export const BlockquoteNodeSchema: z.ZodType<T.BlockquoteNodeType> = z.lazy(
   () =>
@@ -559,7 +559,7 @@ export const BlockquoteNodeSchema: z.ZodType<T.BlockquoteNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see BodiedExtensionNodeType
+ * @see T.BodiedExtensionNodeType
  */
 export const BodiedExtensionNodeSchema: z.ZodType<T.BodiedExtensionNodeType> =
   z.lazy(() =>
@@ -616,7 +616,7 @@ export const BodiedExtensionNodeSchema: z.ZodType<T.BodiedExtensionNodeType> =
  * }
  * </pre>
  *
- * @see BodiedExtensionWithMarksNodeType
+ * @see T.BodiedExtensionWithMarksNodeType
  */
 export const BodiedExtensionWithMarksNodeSchema: z.ZodType<T.BodiedExtensionWithMarksNodeType> =
   z.lazy(() =>
@@ -670,7 +670,7 @@ export const BodiedExtensionWithMarksNodeSchema: z.ZodType<T.BodiedExtensionWith
  * }
  * </pre>
  *
- * @see BorderMarkType
+ * @see T.BorderMarkType
  */
 export const BorderMarkSchema: z.ZodType<T.BorderMarkType> = z.lazy(() =>
   z.strictObject({
@@ -721,7 +721,7 @@ export const BorderMarkSchema: z.ZodType<T.BorderMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see BreakoutMarkType
+ * @see T.BreakoutMarkType
  */
 export const BreakoutMarkSchema: z.ZodType<T.BreakoutMarkType> = z.lazy(() =>
   z.strictObject({
@@ -770,7 +770,7 @@ export const BreakoutMarkSchema: z.ZodType<T.BreakoutMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see BulletListNodeType
+ * @see T.BulletListNodeType
  */
 export const BulletListNodeSchema: z.ZodType<T.BulletListNodeType> = z.lazy(
   () =>
@@ -844,7 +844,7 @@ export const BulletListNodeSchema: z.ZodType<T.BulletListNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see CaptionNodeType
+ * @see T.CaptionNodeType
  */
 export const CaptionNodeSchema: z.ZodType<T.CaptionNodeType> = z.lazy(() =>
   z.strictObject({
@@ -903,7 +903,7 @@ export const CaptionNodeSchema: z.ZodType<T.CaptionNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see CodeInlineNodeType
+ * @see T.CodeInlineNodeType
  */
 export const CodeInlineNodeSchema: z.ZodType<T.CodeInlineNodeType> = z.lazy(
   () =>
@@ -939,7 +939,7 @@ export const CodeInlineNodeSchema: z.ZodType<T.CodeInlineNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see CodeMarkType
+ * @see T.CodeMarkType
  */
 export const CodeMarkSchema: z.ZodType<T.CodeMarkType> = z.lazy(() =>
   z.strictObject({ type: z.literal("code") }),
@@ -990,7 +990,7 @@ export const CodeMarkSchema: z.ZodType<T.CodeMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see CodeBlockNodeType
+ * @see T.CodeBlockNodeType
  */
 export const CodeBlockNodeSchema: z.ZodType<T.CodeBlockNodeType> = z.lazy(() =>
   z.strictObject({
@@ -1054,7 +1054,7 @@ export const CodeBlockNodeSchema: z.ZodType<T.CodeBlockNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see CodeBlockRootOnlyNodeType
+ * @see T.CodeBlockRootOnlyNodeType
  */
 export const CodeBlockRootOnlyNodeSchema: z.ZodType<T.CodeBlockRootOnlyNodeType> =
   z.lazy(() =>
@@ -1109,7 +1109,7 @@ export const CodeBlockRootOnlyNodeSchema: z.ZodType<T.CodeBlockRootOnlyNodeType>
  * }
  * </pre>
  *
- * @see DataConsumerMarkType
+ * @see T.DataConsumerMarkType
  */
 export const DataConsumerMarkSchema: z.ZodType<T.DataConsumerMarkType> = z.lazy(
   () =>
@@ -1156,7 +1156,7 @@ export const DataConsumerMarkSchema: z.ZodType<T.DataConsumerMarkType> = z.lazy(
  * }
  * </pre>
  *
- * @see DateNodeType
+ * @see T.DateNodeType
  */
 export const DateNodeSchema: z.ZodType<T.DateNodeType> = z.lazy(() =>
   z.strictObject({
@@ -1211,7 +1211,7 @@ export const DateNodeSchema: z.ZodType<T.DateNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see DecisionItemNodeType
+ * @see T.DecisionItemNodeType
  */
 export const DecisionItemNodeSchema: z.ZodType<T.DecisionItemNodeType> = z.lazy(
   () =>
@@ -1263,7 +1263,7 @@ export const DecisionItemNodeSchema: z.ZodType<T.DecisionItemNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see DecisionListNodeType
+ * @see T.DecisionListNodeType
  */
 export const DecisionListNodeSchema: z.ZodType<T.DecisionListNodeType> = z.lazy(
   () =>
@@ -1386,7 +1386,7 @@ export const DecisionListNodeSchema: z.ZodType<T.DecisionListNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see DocNodeType
+ * @see T.DocNodeType
  */
 export const DocNodeSchema: z.ZodType<T.DocNodeType> = z.lazy(() =>
   z.strictObject({
@@ -1445,7 +1445,7 @@ export const DocNodeSchema: z.ZodType<T.DocNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see EmMarkType
+ * @see T.EmMarkType
  */
 export const EmMarkSchema: z.ZodType<T.EmMarkType> = z.lazy(() =>
   z.strictObject({ type: z.literal("em") }),
@@ -1510,7 +1510,7 @@ export const EmMarkSchema: z.ZodType<T.EmMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see EmbedCardNodeType
+ * @see T.EmbedCardNodeType
  */
 export const EmbedCardNodeSchema: z.ZodType<T.EmbedCardNodeType> = z.lazy(() =>
   z.strictObject({
@@ -1576,7 +1576,7 @@ export const EmbedCardNodeSchema: z.ZodType<T.EmbedCardNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see EmojiNodeType
+ * @see T.EmojiNodeType
  */
 export const EmojiNodeSchema: z.ZodType<T.EmojiNodeType> = z.lazy(() =>
   z.strictObject({
@@ -1641,7 +1641,7 @@ export const EmojiNodeSchema: z.ZodType<T.EmojiNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see ExpandNodeType
+ * @see T.ExpandNodeType
  */
 export const ExpandNodeSchema: z.ZodType<T.ExpandNodeType> = z.lazy(() =>
   z.strictObject({
@@ -1717,7 +1717,7 @@ export const ExpandNodeSchema: z.ZodType<T.ExpandNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see ExpandRootOnlyNodeType
+ * @see T.ExpandRootOnlyNodeType
  */
 export const ExpandRootOnlyNodeSchema: z.ZodType<T.ExpandRootOnlyNodeType> =
   z.lazy(() =>
@@ -1798,7 +1798,7 @@ export const ExpandRootOnlyNodeSchema: z.ZodType<T.ExpandRootOnlyNodeType> =
  * }
  * </pre>
  *
- * @see ExtensionNodeType
+ * @see T.ExtensionNodeType
  */
 export const ExtensionNodeSchema: z.ZodType<T.ExtensionNodeType> = z.lazy(() =>
   z.strictObject({
@@ -1853,7 +1853,7 @@ export const ExtensionNodeSchema: z.ZodType<T.ExtensionNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see ExtensionWithMarksNodeType
+ * @see T.ExtensionWithMarksNodeType
  */
 export const ExtensionWithMarksNodeSchema: z.ZodType<T.ExtensionWithMarksNodeType> =
   z.lazy(() =>
@@ -1920,7 +1920,7 @@ export const ExtensionWithMarksNodeSchema: z.ZodType<T.ExtensionWithMarksNodeTyp
  * }
  * </pre>
  *
- * @see FormattedTextInlineNodeType
+ * @see T.FormattedTextInlineNodeType
  */
 export const FormattedTextInlineNodeSchema: z.ZodType<T.FormattedTextInlineNodeType> =
   z.lazy(() =>
@@ -1983,7 +1983,7 @@ export const FormattedTextInlineNodeSchema: z.ZodType<T.FormattedTextInlineNodeT
  * }
  * </pre>
  *
- * @see FragmentMarkType
+ * @see T.FragmentMarkType
  */
 export const FragmentMarkSchema: z.ZodType<T.FragmentMarkType> = z.lazy(() =>
   z.strictObject({
@@ -2029,7 +2029,7 @@ export const FragmentMarkSchema: z.ZodType<T.FragmentMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see HardBreakNodeType
+ * @see T.HardBreakNodeType
  */
 export const HardBreakNodeSchema: z.ZodType<T.HardBreakNodeType> = z.lazy(() =>
   z.strictObject({
@@ -2090,7 +2090,7 @@ export const HardBreakNodeSchema: z.ZodType<T.HardBreakNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see HeadingNodeType
+ * @see T.HeadingNodeType
  */
 export const HeadingNodeSchema: z.ZodType<T.HeadingNodeType> = z.lazy(() =>
   z.strictObject({
@@ -2129,7 +2129,7 @@ export const HeadingNodeSchema: z.ZodType<T.HeadingNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see HeadingWithAlignmentNodeType
+ * @see T.HeadingWithAlignmentNodeType
  */
 export const HeadingWithAlignmentNodeSchema: z.ZodType<T.HeadingWithAlignmentNodeType> =
   z.lazy(() =>
@@ -2164,7 +2164,7 @@ export const HeadingWithAlignmentNodeSchema: z.ZodType<T.HeadingWithAlignmentNod
  * }
  * </pre>
  *
- * @see HeadingWithIndentationNodeType
+ * @see T.HeadingWithIndentationNodeType
  */
 export const HeadingWithIndentationNodeSchema: z.ZodType<T.HeadingWithIndentationNodeType> =
   z.lazy(() =>
@@ -2197,7 +2197,7 @@ export const HeadingWithIndentationNodeSchema: z.ZodType<T.HeadingWithIndentatio
  * }
  * </pre>
  *
- * @see HeadingWithNoMarksNodeType
+ * @see T.HeadingWithNoMarksNodeType
  */
 export const HeadingWithNoMarksNodeSchema: z.ZodType<T.HeadingWithNoMarksNodeType> =
   z.lazy(() =>
@@ -2242,7 +2242,7 @@ export const HeadingWithNoMarksNodeSchema: z.ZodType<T.HeadingWithNoMarksNodeTyp
  * }
  * </pre>
  *
- * @see IndentationMarkType
+ * @see T.IndentationMarkType
  */
 export const IndentationMarkSchema: z.ZodType<T.IndentationMarkType> = z.lazy(
   () =>
@@ -2295,7 +2295,7 @@ export const IndentationMarkSchema: z.ZodType<T.IndentationMarkType> = z.lazy(
  * }
  * </pre>
  *
- * @see InlineNodeType
+ * @see T.InlineNodeType
  */
 export const InlineNodeSchema: z.ZodType<T.InlineNodeType> = z.lazy(() =>
   z.union([
@@ -2366,7 +2366,7 @@ export const InlineNodeSchema: z.ZodType<T.InlineNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see InlineCardNodeType
+ * @see T.InlineCardNodeType
  */
 export const InlineCardNodeSchema: z.ZodType<T.InlineCardNodeType> = z.lazy(
   () =>
@@ -2429,7 +2429,7 @@ export const InlineCardNodeSchema: z.ZodType<T.InlineCardNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see InlineExtensionNodeType
+ * @see T.InlineExtensionNodeType
  */
 export const InlineExtensionNodeSchema: z.ZodType<T.InlineExtensionNodeType> =
   z.lazy(() =>
@@ -2478,7 +2478,7 @@ export const InlineExtensionNodeSchema: z.ZodType<T.InlineExtensionNodeType> =
  * }
  * </pre>
  *
- * @see InlineExtensionWithMarksNodeType
+ * @see T.InlineExtensionWithMarksNodeType
  */
 export const InlineExtensionWithMarksNodeSchema: z.ZodType<T.InlineExtensionWithMarksNodeType> =
   z.lazy(() =>
@@ -2538,7 +2538,7 @@ export const InlineExtensionWithMarksNodeSchema: z.ZodType<T.InlineExtensionWith
  * }
  * </pre>
  *
- * @see LayoutColumnNodeType
+ * @see T.LayoutColumnNodeType
  */
 export const LayoutColumnNodeSchema: z.ZodType<T.LayoutColumnNodeType> = z.lazy(
   () =>
@@ -2588,7 +2588,7 @@ export const LayoutColumnNodeSchema: z.ZodType<T.LayoutColumnNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see LayoutSectionFullNodeType
+ * @see T.LayoutSectionFullNodeType
  */
 export const LayoutSectionFullNodeSchema: z.ZodType<T.LayoutSectionFullNodeType> =
   z.lazy(() =>
@@ -2643,7 +2643,7 @@ export const LayoutSectionFullNodeSchema: z.ZodType<T.LayoutSectionFullNodeType>
  * }
  * </pre>
  *
- * @see LayoutSectionNodeType
+ * @see T.LayoutSectionNodeType
  */
 export const LayoutSectionNodeSchema: z.ZodType<T.LayoutSectionNodeType> =
   z.lazy(() =>
@@ -2700,7 +2700,7 @@ export const LayoutSectionNodeSchema: z.ZodType<T.LayoutSectionNodeType> =
  * }
  * </pre>
  *
- * @see LinkMarkType
+ * @see T.LinkMarkType
  */
 export const LinkMarkSchema: z.ZodType<T.LinkMarkType> = z.lazy(() =>
   z.strictObject({
@@ -2798,7 +2798,7 @@ export const LinkMarkSchema: z.ZodType<T.LinkMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see ListItemNodeType
+ * @see T.ListItemNodeType
  */
 export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
   z.strictObject({
@@ -2941,7 +2941,7 @@ export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see MediaNodeType
+ * @see T.MediaNodeType
  */
 export const MediaNodeSchema: z.ZodType<T.MediaNodeType> = z.lazy(() =>
   z.strictObject({
@@ -3000,7 +3000,7 @@ export const MediaNodeSchema: z.ZodType<T.MediaNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see MediaGroupNodeType
+ * @see T.MediaGroupNodeType
  */
 export const MediaGroupNodeSchema: z.ZodType<T.MediaGroupNodeType> = z.lazy(
   () =>
@@ -3088,7 +3088,7 @@ export const MediaGroupNodeSchema: z.ZodType<T.MediaGroupNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see MediaInlineNodeType
+ * @see T.MediaInlineNodeType
  */
 export const MediaInlineNodeSchema: z.ZodType<T.MediaInlineNodeType> = z.lazy(
   () =>
@@ -3150,7 +3150,7 @@ export const MediaInlineNodeSchema: z.ZodType<T.MediaInlineNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see MediaSingleCaptionNodeType
+ * @see T.MediaSingleCaptionNodeType
  */
 export const MediaSingleCaptionNodeSchema: z.ZodType<T.MediaSingleCaptionNodeType> =
   z.lazy(() =>
@@ -3195,7 +3195,7 @@ export const MediaSingleCaptionNodeSchema: z.ZodType<T.MediaSingleCaptionNodeTyp
  * }
  * </pre>
  *
- * @see MediaSingleFullNodeType
+ * @see T.MediaSingleFullNodeType
  */
 export const MediaSingleFullNodeSchema: z.ZodType<T.MediaSingleFullNodeType> =
   z.lazy(() =>
@@ -3302,7 +3302,7 @@ export const MediaSingleFullNodeSchema: z.ZodType<T.MediaSingleFullNodeType> =
  * }
  * </pre>
  *
- * @see MediaSingleNodeType
+ * @see T.MediaSingleNodeType
  */
 export const MediaSingleNodeSchema: z.ZodType<T.MediaSingleNodeType> = z.lazy(
   () =>
@@ -3393,7 +3393,7 @@ export const MediaSingleNodeSchema: z.ZodType<T.MediaSingleNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see MentionNodeType
+ * @see T.MentionNodeType
  */
 export const MentionNodeSchema: z.ZodType<T.MentionNodeType> = z.lazy(() =>
   z.strictObject({
@@ -3466,7 +3466,7 @@ export const MentionNodeSchema: z.ZodType<T.MentionNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see NestedExpandContentType
+ * @see T.NestedExpandContentType
  */
 export const NestedExpandContentSchema: z.ZodType<T.NestedExpandContentType> =
   z.lazy(() =>
@@ -3529,7 +3529,7 @@ export const NestedExpandContentSchema: z.ZodType<T.NestedExpandContentType> =
  * }
  * </pre>
  *
- * @see NestedExpandNodeType
+ * @see T.NestedExpandNodeType
  */
 export const NestedExpandNodeSchema: z.ZodType<T.NestedExpandNodeType> = z.lazy(
   () =>
@@ -3566,7 +3566,7 @@ export const NestedExpandNodeSchema: z.ZodType<T.NestedExpandNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see NestedExpandWithNoMarksNodeType
+ * @see T.NestedExpandWithNoMarksNodeType
  */
 export const NestedExpandWithNoMarksNodeSchema: z.ZodType<T.NestedExpandWithNoMarksNodeType> =
   z.lazy(() =>
@@ -3637,7 +3637,7 @@ export const NestedExpandWithNoMarksNodeSchema: z.ZodType<T.NestedExpandWithNoMa
  * }
  * </pre>
  *
- * @see NonNestableBlockContentType
+ * @see T.NonNestableBlockContentType
  */
 export const NonNestableBlockContentSchema: z.ZodType<T.NonNestableBlockContentType> =
   z.lazy(() =>
@@ -3703,7 +3703,7 @@ export const NonNestableBlockContentSchema: z.ZodType<T.NonNestableBlockContentT
  * }
  * </pre>
  *
- * @see OrderedListNodeType
+ * @see T.OrderedListNodeType
  */
 export const OrderedListNodeSchema: z.ZodType<T.OrderedListNodeType> = z.lazy(
   () =>
@@ -3823,7 +3823,7 @@ export const OrderedListNodeSchema: z.ZodType<T.OrderedListNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see PanelNodeType
+ * @see T.PanelNodeType
  */
 export const PanelNodeSchema: z.ZodType<T.PanelNodeType> = z.lazy(() =>
   z.strictObject({
@@ -3904,7 +3904,7 @@ export const PanelNodeSchema: z.ZodType<T.PanelNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see ParagraphNodeType
+ * @see T.ParagraphNodeType
  */
 export const ParagraphNodeSchema: z.ZodType<T.ParagraphNodeType> = z.lazy(() =>
   z.strictObject({
@@ -3940,7 +3940,7 @@ export const ParagraphNodeSchema: z.ZodType<T.ParagraphNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see ParagraphWithAlignmentNodeType
+ * @see T.ParagraphWithAlignmentNodeType
  */
 export const ParagraphWithAlignmentNodeSchema: z.ZodType<T.ParagraphWithAlignmentNodeType> =
   z.lazy(() =>
@@ -3975,7 +3975,7 @@ export const ParagraphWithAlignmentNodeSchema: z.ZodType<T.ParagraphWithAlignmen
  * }
  * </pre>
  *
- * @see ParagraphWithIndentationNodeType
+ * @see T.ParagraphWithIndentationNodeType
  */
 export const ParagraphWithIndentationNodeSchema: z.ZodType<T.ParagraphWithIndentationNodeType> =
   z.lazy(() =>
@@ -4008,7 +4008,7 @@ export const ParagraphWithIndentationNodeSchema: z.ZodType<T.ParagraphWithIndent
  * }
  * </pre>
  *
- * @see ParagraphWithNoMarksNodeType
+ * @see T.ParagraphWithNoMarksNodeType
  */
 export const ParagraphWithNoMarksNodeSchema: z.ZodType<T.ParagraphWithNoMarksNodeType> =
   z.lazy(() =>
@@ -4054,7 +4054,7 @@ export const ParagraphWithNoMarksNodeSchema: z.ZodType<T.ParagraphWithNoMarksNod
  * }
  * </pre>
  *
- * @see PlaceholderNodeType
+ * @see T.PlaceholderNodeType
  */
 export const PlaceholderNodeSchema: z.ZodType<T.PlaceholderNodeType> = z.lazy(
   () =>
@@ -4096,7 +4096,7 @@ export const PlaceholderNodeSchema: z.ZodType<T.PlaceholderNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see RuleNodeType
+ * @see T.RuleNodeType
  */
 export const RuleNodeSchema: z.ZodType<T.RuleNodeType> = z.lazy(() =>
   z.strictObject({
@@ -4156,7 +4156,7 @@ export const RuleNodeSchema: z.ZodType<T.RuleNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see StatusNodeType
+ * @see T.StatusNodeType
  */
 export const StatusNodeSchema: z.ZodType<T.StatusNodeType> = z.lazy(() =>
   z.strictObject({
@@ -4197,7 +4197,7 @@ export const StatusNodeSchema: z.ZodType<T.StatusNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see StrikeMarkType
+ * @see T.StrikeMarkType
  */
 export const StrikeMarkSchema: z.ZodType<T.StrikeMarkType> = z.lazy(() =>
   z.strictObject({ type: z.literal("strike") }),
@@ -4223,7 +4223,7 @@ export const StrikeMarkSchema: z.ZodType<T.StrikeMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see StrongMarkType
+ * @see T.StrongMarkType
  */
 export const StrongMarkSchema: z.ZodType<T.StrongMarkType> = z.lazy(() =>
   z.strictObject({ type: z.literal("strong") }),
@@ -4265,7 +4265,7 @@ export const StrongMarkSchema: z.ZodType<T.StrongMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see SubsupMarkType
+ * @see T.SubsupMarkType
  */
 export const SubsupMarkSchema: z.ZodType<T.SubsupMarkType> = z.lazy(() =>
   z.strictObject({
@@ -4350,7 +4350,7 @@ export const SubsupMarkSchema: z.ZodType<T.SubsupMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see TableCellContentType
+ * @see T.TableCellContentType
  */
 export const TableCellContentSchema: z.ZodType<T.TableCellContentType> = z.lazy(
   () =>
@@ -4430,7 +4430,7 @@ export const TableCellContentSchema: z.ZodType<T.TableCellContentType> = z.lazy(
  * }
  * </pre>
  *
- * @see TableCellNodeType
+ * @see T.TableCellNodeType
  */
 export const TableCellNodeSchema: z.ZodType<T.TableCellNodeType> = z.lazy(() =>
   z.strictObject({
@@ -4496,7 +4496,7 @@ export const TableCellNodeSchema: z.ZodType<T.TableCellNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see TableHeaderNodeType
+ * @see T.TableHeaderNodeType
  */
 export const TableHeaderNodeSchema: z.ZodType<T.TableHeaderNodeType> = z.lazy(
   () =>
@@ -4581,7 +4581,7 @@ export const TableHeaderNodeSchema: z.ZodType<T.TableHeaderNodeType> = z.lazy(
  * }
  * </pre>
  *
- * @see TableNodeType
+ * @see T.TableNodeType
  */
 export const TableNodeSchema: z.ZodType<T.TableNodeType> = z.lazy(() =>
   z.strictObject({
@@ -4654,7 +4654,7 @@ export const TableNodeSchema: z.ZodType<T.TableNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see TableRowNodeType
+ * @see T.TableRowNodeType
  */
 export const TableRowNodeSchema: z.ZodType<T.TableRowNodeType> = z.lazy(() =>
   z.strictObject({
@@ -4710,7 +4710,7 @@ export const TableRowNodeSchema: z.ZodType<T.TableRowNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see TaskItemNodeType
+ * @see T.TaskItemNodeType
  */
 export const TaskItemNodeSchema: z.ZodType<T.TaskItemNodeType> = z.lazy(() =>
   z.strictObject({
@@ -4776,7 +4776,7 @@ export const TaskItemNodeSchema: z.ZodType<T.TaskItemNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see TaskListNodeType
+ * @see T.TaskListNodeType
  */
 export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
   z.strictObject({
@@ -4821,7 +4821,7 @@ export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see TextNodeType
+ * @see T.TextNodeType
  */
 export const TextNodeSchema: z.ZodType<T.TextNodeType> = z.lazy(() =>
   z.strictObject({
@@ -4854,7 +4854,7 @@ export const TextNodeSchema: z.ZodType<T.TextNodeType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see TextWithNoMarksNodeType
+ * @see T.TextWithNoMarksNodeType
  */
 export const TextWithNoMarksNodeSchema: z.ZodType<T.TextWithNoMarksNodeType> =
   z.lazy(() =>
@@ -4898,7 +4898,7 @@ export const TextWithNoMarksNodeSchema: z.ZodType<T.TextWithNoMarksNodeType> =
  * }
  * </pre>
  *
- * @see TextColorMarkType
+ * @see T.TextColorMarkType
  */
 export const TextColorMarkSchema: z.ZodType<T.TextColorMarkType> = z.lazy(() =>
   z.strictObject({
@@ -4927,7 +4927,7 @@ export const TextColorMarkSchema: z.ZodType<T.TextColorMarkType> = z.lazy(() =>
  * }
  * </pre>
  *
- * @see UnderlineMarkType
+ * @see T.UnderlineMarkType
  */
 export const UnderlineMarkSchema: z.ZodType<T.UnderlineMarkType> = z.lazy(() =>
   z.strictObject({ type: z.literal("underline") }),
