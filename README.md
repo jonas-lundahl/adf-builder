@@ -2,6 +2,10 @@
 
 Build and validate Atlassian documents using Zod schemas.
 
+## Schemas
+
+Schemas are generated using the JSON schema [provided by Atlassian](https://go.atlassian.com/adf-json-schema), version 50.0.1.
+
 ## Installation
 
 ```bash
