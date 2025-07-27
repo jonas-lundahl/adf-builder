@@ -12,7 +12,8 @@
     "declaration": true,
     "declarationDir": "dist",
 
-    "pretty": true
+    "pretty": true,
+    "removeComments": true,
   },
   "include": ["index.ts", "__generated__/*.ts"]
 }
