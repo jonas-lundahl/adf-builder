@@ -1,7 +1,8 @@
 import { schemaName, typeName } from "./variable-name.js";
+import { blockComment } from "./comment.js";
 
 export function parseSchema(schema = {}, name = "Root") {
-  return `export const ${schemaName(name)}: z.ZodType<T.${typeName(name)}> = z.lazy( () => ${parseNode(schema)});`;
+  return `${createComment(schema, name)}\n export const ${schemaName(name)}: z.ZodType<T.${typeName(name)}> = z.lazy(() => ${parseNode(schema)});`;
 }
 
 function parseNode(schema = {}) {
@@ -164,4 +165,17 @@ function parseTuple(schema = []) {
   }
 
   return `z.tuple([${schema.map((node) => parseNode(node)).join(",")}])`;
+}
+
+function createComment(schema = {}, name) {
+  const lines = [
+    `Definition: <code>${name}</code>`,
+    ``,
+    `<pre>`,
+    JSON.stringify(schema, null, 2),
+    `</pre>`,
+    ``,
+    `@see ${typeName(name)}`,
+  ];
+  return blockComment(lines.join("\n"));
 }
