@@ -2,6 +2,7 @@ import { writeFile } from "fs/promises";
 import { parseSchema } from "./generate-zod-schema.js";
 import prettier from "prettier";
 import { generateTypes } from "./generate-typescript-types.js";
+import { sortSchemas } from "./sort-schema.js";
 
 const SCHEMA_URL = "https://go.atlassian.com/adf-json-schema";
 
@@ -13,8 +14,10 @@ await writeFile("./__generated__/schema.json", JSON.stringify(schema, null, 2));
 
 // Zod Schema
 
-const parsedSchemas = Object.entries(schema.definitions)
-  .map(([name, def]) => parseSchema(def, name))
+const schemas = sortSchemas(schema.definitions);
+
+const parsedSchemas = schemas
+  .map(({ name, definition, cyclic }) => parseSchema(name, definition, cyclic))
   .join("\n\n\n\n");
 
 const parsedSchemasWithImports =

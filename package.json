@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "test": "npm run build && node tests/test.js",
     "generate": "node scripts/generate.js"
   },
   "keywords": [

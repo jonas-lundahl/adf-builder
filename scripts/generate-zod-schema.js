@@ -1,8 +1,13 @@
 import { schemaName, typeName } from "./variable-name.js";
 import { blockComment } from "./comment.js";
 
-export function parseSchema(schema = {}, name = "Root") {
-  return `${createComment(schema, name)}\n export const ${schemaName(name)}: z.ZodType<T.${typeName(name)}> = z.lazy(() => ${parseNode(schema)});`;
+export function parseSchema(name, definition, cyclic) {
+  return [
+    createComment(definition, name),
+    `export const ${schemaName(name)}: z.ZodType<T.${typeName(name)}> = (`,
+    cyclic ? `z.lazy(()=>${parseNode(definition)})` : parseNode(definition),
+    `)`,
+  ].join("\n");
 }
 
 function parseNode(schema = {}) {
