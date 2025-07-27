@@ -52,9 +52,11 @@ export function sortSchemas(definitions) {
     visit(name);
   }
 
-  return result.map((name) => ({
-    name,
-    definition: definitions[name],
-    cyclic: cycles.has(name),
-  }));
+  return result
+    .map((name) => ({
+      name,
+      definition: definitions[name],
+      cyclic: cycles.has(name),
+    }))
+    .sort((a, b) => Number(b.cyclic) - Number(a.cyclic));
 }

@@ -3,6 +3,239 @@ import { z } from "zod";
 import * as T from "./types.js";
 
 /**
+ * Definition: <code>taskList_node</code>
+ *
+ * <pre>
+ * {
+ *   "type": "object",
+ *   "properties": {
+ *     "type": {
+ *       "enum": [
+ *         "taskList"
+ *       ]
+ *     },
+ *     "attrs": {
+ *       "type": "object",
+ *       "properties": {
+ *         "localId": {
+ *           "type": "string"
+ *         }
+ *       },
+ *       "required": [
+ *         "localId"
+ *       ],
+ *       "additionalProperties": false
+ *     },
+ *     "content": {
+ *       "type": "array",
+ *       "items": [
+ *         {
+ *           "$ref": "#/definitions/taskItem_node"
+ *         },
+ *         {
+ *           "anyOf": [
+ *             {
+ *               "$ref": "#/definitions/taskItem_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/taskList_node"
+ *             }
+ *           ]
+ *         }
+ *       ],
+ *       "minItems": 1
+ *     }
+ *   },
+ *   "additionalProperties": false,
+ *   "required": [
+ *     "type",
+ *     "attrs",
+ *     "content"
+ *   ]
+ * }
+ * </pre>
+ *
+ * @see T.TaskListNodeType
+ */
+export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
+  z.strictObject({
+    type: z.literal("taskList"),
+    attrs: z.strictObject({ localId: z.string() }),
+    content: z
+      .array(
+        z.tuple([
+          TaskItemNodeSchema,
+          z.union([TaskItemNodeSchema, TaskListNodeSchema]),
+        ]),
+      )
+      .min(1),
+  }),
+);
+
+/**
+ * Definition: <code>listItem_node</code>
+ *
+ * <pre>
+ * {
+ *   "type": "object",
+ *   "properties": {
+ *     "type": {
+ *       "enum": [
+ *         "listItem"
+ *       ]
+ *     },
+ *     "attrs": {
+ *       "type": "object",
+ *       "properties": {
+ *         "localId": {
+ *           "type": "string"
+ *         }
+ *       },
+ *       "additionalProperties": false
+ *     },
+ *     "content": {
+ *       "type": "array",
+ *       "items": [
+ *         {
+ *           "anyOf": [
+ *             {
+ *               "$ref": "#/definitions/paragraph_with_no_marks_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/mediaSingle_caption_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/mediaSingle_full_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/codeBlock_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/extension_with_marks_node"
+ *             }
+ *           ]
+ *         },
+ *         {
+ *           "anyOf": [
+ *             {
+ *               "$ref": "#/definitions/paragraph_with_no_marks_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/bulletList_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/orderedList_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/taskList_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/mediaSingle_caption_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/mediaSingle_full_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/codeBlock_node"
+ *             },
+ *             {
+ *               "$ref": "#/definitions/extension_with_marks_node"
+ *             }
+ *           ]
+ *         }
+ *       ],
+ *       "minItems": 1
+ *     }
+ *   },
+ *   "additionalProperties": false,
+ *   "required": [
+ *     "type",
+ *     "content"
+ *   ]
+ * }
+ * </pre>
+ *
+ * @see T.ListItemNodeType
+ */
+export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
+  z.strictObject({
+    type: z.literal("listItem"),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
+    content: z
+      .array(
+        z.tuple([
+          z.union([
+            ParagraphWithNoMarksNodeSchema,
+            MediaSingleCaptionNodeSchema,
+            MediaSingleFullNodeSchema,
+            CodeBlockNodeSchema,
+            ExtensionWithMarksNodeSchema,
+          ]),
+          z.union([
+            ParagraphWithNoMarksNodeSchema,
+            BulletListNodeSchema,
+            OrderedListNodeSchema,
+            TaskListNodeSchema,
+            MediaSingleCaptionNodeSchema,
+            MediaSingleFullNodeSchema,
+            CodeBlockNodeSchema,
+            ExtensionWithMarksNodeSchema,
+          ]),
+        ]),
+      )
+      .min(1),
+  }),
+);
+
+/**
+ * Definition: <code>bulletList_node</code>
+ *
+ * <pre>
+ * {
+ *   "type": "object",
+ *   "properties": {
+ *     "type": {
+ *       "enum": [
+ *         "bulletList"
+ *       ]
+ *     },
+ *     "attrs": {
+ *       "type": "object",
+ *       "properties": {
+ *         "localId": {
+ *           "type": "string"
+ *         }
+ *       },
+ *       "additionalProperties": false
+ *     },
+ *     "content": {
+ *       "type": "array",
+ *       "items": {
+ *         "$ref": "#/definitions/listItem_node"
+ *       },
+ *       "minItems": 1
+ *     }
+ *   },
+ *   "additionalProperties": false,
+ *   "required": [
+ *     "type",
+ *     "content"
+ *   ]
+ * }
+ * </pre>
+ *
+ * @see T.BulletListNodeType
+ */
+export const BulletListNodeSchema: z.ZodType<T.BulletListNodeType> = z.lazy(
+  () =>
+    z.strictObject({
+      type: z.literal("bulletList"),
+      attrs: z.strictObject({ localId: z.string().optional() }).optional(),
+      content: z.array(ListItemNodeSchema).min(1),
+    }),
+);
+
+/**
  * Definition: <code>alignment_mark</code>
  *
  * <pre>
@@ -2319,76 +2552,6 @@ export const TaskItemNodeSchema: z.ZodType<T.TaskItemNodeType> = z.strictObject(
 );
 
 /**
- * Definition: <code>taskList_node</code>
- *
- * <pre>
- * {
- *   "type": "object",
- *   "properties": {
- *     "type": {
- *       "enum": [
- *         "taskList"
- *       ]
- *     },
- *     "attrs": {
- *       "type": "object",
- *       "properties": {
- *         "localId": {
- *           "type": "string"
- *         }
- *       },
- *       "required": [
- *         "localId"
- *       ],
- *       "additionalProperties": false
- *     },
- *     "content": {
- *       "type": "array",
- *       "items": [
- *         {
- *           "$ref": "#/definitions/taskItem_node"
- *         },
- *         {
- *           "anyOf": [
- *             {
- *               "$ref": "#/definitions/taskItem_node"
- *             },
- *             {
- *               "$ref": "#/definitions/taskList_node"
- *             }
- *           ]
- *         }
- *       ],
- *       "minItems": 1
- *     }
- *   },
- *   "additionalProperties": false,
- *   "required": [
- *     "type",
- *     "attrs",
- *     "content"
- *   ]
- * }
- * </pre>
- *
- * @see T.TaskListNodeType
- */
-export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.literal("taskList"),
-    attrs: z.strictObject({ localId: z.string() }),
-    content: z
-      .array(
-        z.tuple([
-          TaskItemNodeSchema,
-          z.union([TaskItemNodeSchema, TaskListNodeSchema]),
-        ]),
-      )
-      .min(1),
-  }),
-);
-
-/**
  * Definition: <code>extension_node</code>
  *
  * <pre>
@@ -2565,169 +2728,6 @@ export const OrderedListNodeSchema: z.ZodType<T.OrderedListNodeType> =
       .optional(),
     content: z.array(ListItemNodeSchema).min(1),
   });
-
-/**
- * Definition: <code>listItem_node</code>
- *
- * <pre>
- * {
- *   "type": "object",
- *   "properties": {
- *     "type": {
- *       "enum": [
- *         "listItem"
- *       ]
- *     },
- *     "attrs": {
- *       "type": "object",
- *       "properties": {
- *         "localId": {
- *           "type": "string"
- *         }
- *       },
- *       "additionalProperties": false
- *     },
- *     "content": {
- *       "type": "array",
- *       "items": [
- *         {
- *           "anyOf": [
- *             {
- *               "$ref": "#/definitions/paragraph_with_no_marks_node"
- *             },
- *             {
- *               "$ref": "#/definitions/mediaSingle_caption_node"
- *             },
- *             {
- *               "$ref": "#/definitions/mediaSingle_full_node"
- *             },
- *             {
- *               "$ref": "#/definitions/codeBlock_node"
- *             },
- *             {
- *               "$ref": "#/definitions/extension_with_marks_node"
- *             }
- *           ]
- *         },
- *         {
- *           "anyOf": [
- *             {
- *               "$ref": "#/definitions/paragraph_with_no_marks_node"
- *             },
- *             {
- *               "$ref": "#/definitions/bulletList_node"
- *             },
- *             {
- *               "$ref": "#/definitions/orderedList_node"
- *             },
- *             {
- *               "$ref": "#/definitions/taskList_node"
- *             },
- *             {
- *               "$ref": "#/definitions/mediaSingle_caption_node"
- *             },
- *             {
- *               "$ref": "#/definitions/mediaSingle_full_node"
- *             },
- *             {
- *               "$ref": "#/definitions/codeBlock_node"
- *             },
- *             {
- *               "$ref": "#/definitions/extension_with_marks_node"
- *             }
- *           ]
- *         }
- *       ],
- *       "minItems": 1
- *     }
- *   },
- *   "additionalProperties": false,
- *   "required": [
- *     "type",
- *     "content"
- *   ]
- * }
- * </pre>
- *
- * @see T.ListItemNodeType
- */
-export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
-  z.strictObject({
-    type: z.literal("listItem"),
-    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
-    content: z
-      .array(
-        z.tuple([
-          z.union([
-            ParagraphWithNoMarksNodeSchema,
-            MediaSingleCaptionNodeSchema,
-            MediaSingleFullNodeSchema,
-            CodeBlockNodeSchema,
-            ExtensionWithMarksNodeSchema,
-          ]),
-          z.union([
-            ParagraphWithNoMarksNodeSchema,
-            BulletListNodeSchema,
-            OrderedListNodeSchema,
-            TaskListNodeSchema,
-            MediaSingleCaptionNodeSchema,
-            MediaSingleFullNodeSchema,
-            CodeBlockNodeSchema,
-            ExtensionWithMarksNodeSchema,
-          ]),
-        ]),
-      )
-      .min(1),
-  }),
-);
-
-/**
- * Definition: <code>bulletList_node</code>
- *
- * <pre>
- * {
- *   "type": "object",
- *   "properties": {
- *     "type": {
- *       "enum": [
- *         "bulletList"
- *       ]
- *     },
- *     "attrs": {
- *       "type": "object",
- *       "properties": {
- *         "localId": {
- *           "type": "string"
- *         }
- *       },
- *       "additionalProperties": false
- *     },
- *     "content": {
- *       "type": "array",
- *       "items": {
- *         "$ref": "#/definitions/listItem_node"
- *       },
- *       "minItems": 1
- *     }
- *   },
- *   "additionalProperties": false,
- *   "required": [
- *     "type",
- *     "content"
- *   ]
- * }
- * </pre>
- *
- * @see T.BulletListNodeType
- */
-export const BulletListNodeSchema: z.ZodType<T.BulletListNodeType> = z.lazy(
-  () =>
-    z.strictObject({
-      type: z.literal("bulletList"),
-      attrs: z.strictObject({ localId: z.string().optional() }).optional(),
-      content: z.array(ListItemNodeSchema).min(1),
-    }),
-);
 
 /**
  * Definition: <code>heading_node</code>
