@@ -5,18 +5,18 @@ export function parseSchema(name, definition, cyclic) {
   return [
     createComment(definition, name),
     `export const ${schemaName(name)}: z.ZodType<T.${typeName(name)}> = (`,
-    cyclic ? `z.lazy(()=>${parseNode(definition)})` : parseNode(definition),
+    parseNode(definition, cyclic),
     `)`,
   ].join("\n");
 }
 
-function parseNode(schema = {}) {
+function parseNode(schema = {}, cyclic = false) {
   return (
     parseArray(schema) ||
     parseBoolean(schema) ||
     parseNumber(schema) ||
     parseString(schema) ||
-    parseObject(schema) ||
+    parseObject(schema, cyclic) ||
     parseRef(schema) ||
     parseAnyOf(schema) ||
     parseAllOf(schema) ||
@@ -26,7 +26,7 @@ function parseNode(schema = {}) {
   );
 }
 
-function parseObject(schema = {}) {
+function parseObject(schema = {}, cyclic = false) {
   if (schema.type !== "object") {
     return "";
   }
@@ -41,7 +41,13 @@ function parseObject(schema = {}) {
   str += Object.entries(schema.properties)
     .map(([field, def]) => {
       const isRequired = schema.required?.includes(field);
-      return `${field}:${parseNode(def)}${isRequired ? `,` : `.optional(),`}`;
+      const children = parseNode(def);
+
+      if (children.includes("Schema") && cyclic) {
+        return `get ${field}() {return ${children}${isRequired ? `;}` : `.optional();}`}`;
+      } else {
+        return `${field}:${children}${isRequired ? `,` : `.optional(),`}`;
+      }
     })
     .join(" ");
 
