@@ -57,19 +57,21 @@ import * as T from "./types.js";
  *
  * @see T.TaskListNodeType
  */
-export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
-  z.strictObject({
+export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.strictObject(
+  {
     type: z.literal("taskList"),
     attrs: z.strictObject({ localId: z.string() }),
-    content: z
-      .array(
-        z.tuple([
-          TaskItemNodeSchema,
-          z.union([TaskItemNodeSchema, TaskListNodeSchema]),
-        ]),
-      )
-      .min(1),
-  }),
+    get content() {
+      return z
+        .array(
+          z.tuple([
+            TaskItemNodeSchema,
+            z.union([TaskItemNodeSchema, TaskListNodeSchema]),
+          ]),
+        )
+        .min(1);
+    },
+  },
 );
 
 /**
@@ -157,34 +159,36 @@ export const TaskListNodeSchema: z.ZodType<T.TaskListNodeType> = z.lazy(() =>
  *
  * @see T.ListItemNodeType
  */
-export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
-  z.strictObject({
+export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.strictObject(
+  {
     type: z.literal("listItem"),
     attrs: z.strictObject({ localId: z.string().optional() }).optional(),
-    content: z
-      .array(
-        z.tuple([
-          z.union([
-            ParagraphWithNoMarksNodeSchema,
-            MediaSingleCaptionNodeSchema,
-            MediaSingleFullNodeSchema,
-            CodeBlockNodeSchema,
-            ExtensionWithMarksNodeSchema,
+    get content() {
+      return z
+        .array(
+          z.tuple([
+            z.union([
+              ParagraphWithNoMarksNodeSchema,
+              MediaSingleCaptionNodeSchema,
+              MediaSingleFullNodeSchema,
+              CodeBlockNodeSchema,
+              ExtensionWithMarksNodeSchema,
+            ]),
+            z.union([
+              ParagraphWithNoMarksNodeSchema,
+              BulletListNodeSchema,
+              OrderedListNodeSchema,
+              TaskListNodeSchema,
+              MediaSingleCaptionNodeSchema,
+              MediaSingleFullNodeSchema,
+              CodeBlockNodeSchema,
+              ExtensionWithMarksNodeSchema,
+            ]),
           ]),
-          z.union([
-            ParagraphWithNoMarksNodeSchema,
-            BulletListNodeSchema,
-            OrderedListNodeSchema,
-            TaskListNodeSchema,
-            MediaSingleCaptionNodeSchema,
-            MediaSingleFullNodeSchema,
-            CodeBlockNodeSchema,
-            ExtensionWithMarksNodeSchema,
-          ]),
-        ]),
-      )
-      .min(1),
-  }),
+        )
+        .min(1);
+    },
+  },
 );
 
 /**
@@ -226,14 +230,14 @@ export const ListItemNodeSchema: z.ZodType<T.ListItemNodeType> = z.lazy(() =>
  *
  * @see T.BulletListNodeType
  */
-export const BulletListNodeSchema: z.ZodType<T.BulletListNodeType> = z.lazy(
-  () =>
-    z.strictObject({
-      type: z.literal("bulletList"),
-      attrs: z.strictObject({ localId: z.string().optional() }).optional(),
-      content: z.array(ListItemNodeSchema).min(1),
-    }),
-);
+export const BulletListNodeSchema: z.ZodType<T.BulletListNodeType> =
+  z.strictObject({
+    type: z.literal("bulletList"),
+    attrs: z.strictObject({ localId: z.string().optional() }).optional(),
+    get content() {
+      return z.array(ListItemNodeSchema).min(1);
+    },
+  });
 
 /**
  * Definition: <code>alignment_mark</code>
